@@ -1,0 +1,397 @@
+<template name="cobroActividad">
+<tr><td>{{nombreActividad}}</td><td>$ {{importe}}</td></tr>
+</template>
+<template name="imprimirRecivo">
+  <div class="modal fade bs-example-modal-lg" tabindex="" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+       <div class="modal-header">
+                    <h4 class="modal-title"><button id="btnPrint" style="float:right" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Imprimir</button> </h4>
+                </div>
+                <div class="modal-body">
+                  <div id="alta" style="padding:20px">   
+                    
+                   {{>cabezal mes=mes ano=ano dia=dia}}
+                    <div style="float:right"><h5> <b>NRO RECIBO </b>{{nroRecivo}}</h5></div>
+                  <p style="text-align:center"><b>RECIBO POR PAGO DE ACTIVIDADES/CUOTA SOCIAL</b></p>
+                 
+                  <div class="row" style="padding:30px">
+                  Recibi de <b>{{socio}} <i><small>(nro {{nroSocio}})</small></i></b>  la cantidad de <b>$ {{importe}} {{importeLetras}}</b> con {{formaPago}} ({{importeFormaPago}}) {{#if hay2FormaPago}} y con  {{formaPago2}} ({{importeFormaPago2}}) {{/if}}, en los siguientes conceptos: <br>
+                    <table class="table table-condensed">
+                      <thead><tr><th>Detalle</th><th>$ Importe</th></tr></thead>
+                      <tbody>
+                      <tr><td>PAGO de Cuota Social</td><td>$ {{importeCuotaSocial}}</td></tr>
+                      <tr><td>Carnet de Socio</td><td>$ {{importeCarnet}}</td></tr>
+                      <tr><td>Otros</td><td>$ {{importeOtros}}</td></tr>
+                      {{#each itemsActividades}}
+                      {{>cobroActividad}}
+                      {{/each}}
+                       <tr><td><b>TOTAL</b></td><td><b>$ {{importeAcredita}}</b></td></tr>
+                     </tbody>
+                    </table>
+<!--                     <table class="table table-striped">
+                       <tr><th>Detalle</th><th>$ Importe</th></tr>
+                      <tr><td>Cuota SOCIAL</td><td>{{importeCargaSocial}}</td></tr>
+                      <tr><td>Cuota ACTIVIDADES</td><td>{{importeCargaActividad}}</td></tr>
+                       <tr><td>TOTAL</td><td>{{importeDebita}}</td></tr>
+                    </table> -->
+                     <i><small>Detalle:  {{detalle}}</small></i>
+                    
+                    <br><br>
+                    <div style="float:right">
+                      __________________________________
+                    FIRMA y ACLARACION
+                    </div>
+                    
+                  </div>
+                    <br>
+                  <span style="color:grey">- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - </span>
+                    <br>
+                    {{>cabezal mes=mes ano=ano dia=dia}}
+                    <div style="float:right"><h5> <b>NRO RECIBO </b>{{nroRecivo}}</h5></div>
+                  <p style="text-align:center"><b>RECIBO POR PAGO DE ACTIVIDADES/CUOTA SOCIAL</b></p>
+                 
+                  <div class="row" style="padding:30px">
+                  Recibi de <b>{{socio}}  <i><small>(nro {{nroSocio}})</small></i></b> la cantidad de <b>$ {{importe}} {{importeLetras}}</b> con {{formaPago}} ({{importeFormaPago}}) {{#if hay2FormaPago}} y con  {{formaPago2}} ({{importeFormaPago2}}) {{/if}}, en los siguientes conceptos: <br>
+                    <table class="table table-condensed">
+                      <thead><tr><th>Detalle</th><th>$ Importe</th></tr></thead>
+                      <tbody>
+                      <tr><td>PAGO de Cuota Social</td><td>$ {{importeCuotaSocial}}</td></tr>
+                      <tr><td>Carnet de Socio</td><td>$ {{importeCarnet}}</td></tr>
+                      <tr><td>Otros</td><td>$ {{importeOtros}}</td></tr>
+                      {{#each itemsActividades}}
+                      {{>cobroActividad}}
+                      {{/each}}
+                       <tr><td><b>TOTAL</b></td><td><b>$ {{importeAcredita}}</b></td></tr>
+                     </tbody>
+                    </table>
+<!--                     <table class="table table-striped">
+                       <tr><th>Detalle</th><th>$ Importe</th></tr>
+                      <tr><td>Cuota SOCIAL</td><td>{{importeCargaSocial}}</td></tr>
+                      <tr><td>Cuota ACTIVIDADES</td><td>{{importeCargaActividad}}</td></tr>
+                       <tr><td>TOTAL</td><td>{{importeDebita}}</td></tr>
+                    </table> -->
+                     <i><small>Detalle:  {{detalle}}</small></i>
+                    
+                    <br><br>
+                    <div style="float:right">
+                      __________________________________
+                    FIRMA y ACLARACION
+                    </div>
+                    
+                  </div>
+                  
+                    
+                  
+
+                </div>
+ </div>
+    </div>
+  </div>
+</div>
+
+</template>
+<template name="movimientosCuenta">
+  
+     
+ 
+   <h4><span class="glyphicon glyphicon-book" aria-hidden="true"></span> MOVIMIENTOS CUENTA<small> entradas/salidas</small>  </h4>
+
+{{> reactiveTable showNavigation='auto' showNavigationRowsPerPage="false" id="tabla|Movimientos" settings=settings}}
+    <div style="float:left;color:red"> <h5> <b>DEBITOS $ </b>{{totalDebitos}}  </h5> </div>
+       <div style="float:right;color:green"> <h5> <b>CREDITOS $ </b>{{creditosTotal}}  </h5> </div>
+<br><br><br>
+   <div style="float:right"> <h3> <b>SALDO $ </b>{{total}}  </h3> </div>
+  
+  <button style="width:100%"  id="btnAgregarMov" class="btn btn-success">
+       <span  class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+       Agregar <b>Movimiento de Cuenta</b>
+     </button>
+</template>
+<template name="accionesMovimientosCuenta">
+<div class="acciones" >
+  <button title="Imprimir" type="button" class="imprimir btn  btn-xs btn-primary" aria-label="Left Align">  <span class="glyphicon glyphicon-print" aria-hidden="true"></span> </button>
+  <button title="Modificar" type="button" class="update btn  btn-xs btn-primary" aria-label="Left Align">  <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> </button>
+  {{# if puedoBorrar}}
+  <button title="Quitar" type="button" class="delete btn  btn-xs btn-danger" aria-label="Left Align">  <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button>
+  {{/if}}
+    
+</div>
+</template>
+
+<template name="nuevoMovimientoCuneta">
+   
+    <div class="modal fade"> 
+     
+        <div class="modal-dialog">
+            <div class="modal-content"> 
+ {{#autoForm  collection="Socios" id="nuevoMovimientosCuenta_" doc=this scope="movimientosCuenta" setArrayItems="true" type="update-pushArray"}}
+ {{> afQuickField style="width:90px" type="hidden"  name='_id' id='_id' }}
+  {{> afQuickField style="width:90px" type="hidden"  name='puntoVenta' value="1" id='puntoVenta' }}
+                <div class="modal-header">
+                  
+                  <div class="modal-title"><b> <h4>
+                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 
+                     <div style="float:right">
+                    <div class="form-inline"> {{> afQuickField style="width:150px" label=true  name='nroRecivo' id='nroRecivo' }}
+                      {{> afQuickField style="width:150px" label=false  name='fecha' id='fecha' }}</div>
+                    
+                    </div>
+                    </h4></b>
+                   
+                  
+                  </div>
+                </div>
+                <div class="modal-body">
+                    
+                          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingTwo">
+      <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+           <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> <b>$ CUOTAS SOCIALES </b> <small>items y detalles</small>
+        </a>
+      </h4>
+    </div>
+    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+      <div class="panel-body">
+        {{> detalleItems items=itemsPago }}
+   
+          </div>
+    </div>
+  </div>
+   <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingTwo">
+      <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#importe_actividades" aria-expanded="false" aria-controls="importe_actividades">
+           <span class="glyphicon glyphicon-headphones" aria-hidden="true"></span> <b>$ ACTIVIDADES </b> <small>items y detalles</small>
+        </a>
+      </h4>
+    </div>
+    <div id="importe_actividades" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+      <div class="panel-body">
+        <table class="table condensed">
+  <tr><th><b style="color:green">(+)CREDITOS</b></th><th><b  style="color:red">(-)DEBITOS</b></th></tr>
+  <tr><td><table>
+  
+     
+    {{#each actividades}} {{>actividadPago}} {{/each}}
+    </table></td><td> {{> afQuickField style="width:120px" value="0" class="importesPagos" id="importeCargaActividad"  name="importeCargaActividad" }}</td>  </tr>
+
+  <tr>  </tr>
+  </table>
+     
+       
+          </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingOne">
+      <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#datosMovimiento" aria-expanded="false" aria-controls="collapseOne">
+         <span class="glyphicon glyphicon-file" aria-hidden="true"></span> <b>FORMA DE PAGOS </b> <small>$importes</small>
+        </a>
+      </h4>
+    </div>
+    <div id="datosMovimiento" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+     
+      <div class="panel-body">
+        
+         <div style="float:left">
+             {{> afQuickField style="" value="EFECTIVO" name="formaPago" }}
+           {{> afQuickField type="hidden"  name="importeDebita" id="importeDebita" }}
+      
+           {{> afQuickField type="hidden"  name="importeAcredita" id="importeAcredita" }}
+        {{> afQuickField style="width:90px" value="0" id="importeFormaPago" name="importeFormaPago" }}
+        </div>
+        <div style="float:right">
+           {{> afQuickField style=""  name="hay2FormaPago" id="hay2FormaPago" }}
+          <div id="contenedor_formaPago2" style="display:none">
+               {{> afQuickField style="" value="POSNET" name="formaPago2" }}
+        {{> afQuickField style="width:90px" value="0"  id="importeFormaPago2" name="importeFormaPago2" }}
+               </div>
+        </div>
+        
+         
+      </div>
+    </div>
+  </div>
+</div>
+                  <div style="float:right">
+                    <h3>
+                     TOTAL $ <b>{{importeFinal}}</b>
+                    </h3>
+                  </div>
+      {{> afQuickField name="detalle" }}
+      {{> afQuickField type="hidden"  name="usuario" value=usuario id="usuario" }}
+      <button type="submit" disabled="{{disableButtons}}" id="btnAceptar" style="width:100%" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> ACEPTAR</button>
+
+                     
+                  
+                </div>
+
+ {{/autoForm}}
+            </div>
+        </div>
+       
+    </div>
+
+</template>
+<template name="actividadPago">
+  <tr><td>{{nombreActividad}}</td><td><input data-schema-key="movimientosCuenta.{{indexMovimiento}}.itemsActividades.{{index}}.idActividad"
+                                             name="movimientosCuenta.{{indexMovimiento}}.itemsActividades.{{index}}.idActividad" 
+                                             type="hidden" value="{{_id}}">
+    <input name="movimientosCuenta.{{indexMovimiento}}.itemsActividades.{{index}}.importe" id="{{_id}}" 
+           value="{{getImporteActividad _id true}}" data-schema-key="movimientosCuenta.{{indexMovimiento}}.itemsActividades.{{index}}.importe" 
+           class="importesPagos" type="number" style="width:80px"><small>$ {{importe}}</small></td></tr>
+  
+</template>
+<template name="actividadPago2">
+  <tr><td>{{nombreActividad}}</td><td><input id="{{_id}}"  value="{{getImporteActividad _id false}}" class="importesPagos" type="number" style="width:80px"><small>$ {{importe}}</small></td></tr>
+  
+</template>
+<template name="detalleItems">
+<div style="padding:10px">
+<table class="table condensed">
+  <tr><th><b style="color:green">(+)CREDITOS</b></th><th><b  style="color:red">(-)DEBITOS</b></th></tr>
+  <tr> <td>{{> afQuickField style="width:120px" value="0" class="importesPagos" id="importeCuotaSocial" name="importeCuotaSocial" }}</td><td>{{> afQuickField style="width:120px" value="0" class="importesPagos" id="importeCargaSocial" name="importeCargaSocial" }}</td>  </tr>
+   <tr> <td>{{> afQuickField style="width:120px" value="0" class="importesPagos" id="importeCarnet" name="importeCarnet" }}</td> </tr>
+  <tr>  <td>{{> afQuickField style="width:120px" value="0" class="importesPagos" id="importeOtros" name="importeOtros" }}</td> </tr>
+  <tr>  <td>{{> afQuickField style="width:120px" value="0" class="importesPagos" id="importeInscripcion" name="importeInscripcion" }}</td> </tr>
+  <tr>  </tr>
+  </table>
+  </div>
+</template>
+<template name="detalleItemsModifica">
+<div style="padding:10px">
+<table class="table condensed">
+  <tr><th><b style="color:green">(+)CREDITOS</b></th><th><b  style="color:red">(-)DEBITOS</b></th></tr>
+  <tr> <td>{{> afQuickField style="width:120px" value="0" class="importesPagos" id="importeCuotaSocial" name=eti_importeCuotaSocial }}</td><td>{{> afQuickField style="width:120px" value="0" class="importesPagos" id="importeCargaSocial" name=eti_importeCargaSocial }}</td>  </tr>
+   <tr> <td>{{> afQuickField style="width:120px" value="0" class="importesPagos" id="importeCarnet" name=eti_importeCarnet }}</td> </tr>
+  <tr>  <td>{{> afQuickField style="width:120px" value="0" class="importesPagos" id="importeOtros" name=eti_importeOtros }}</td> </tr>
+  <tr>  </tr>
+  </table>
+  </div>
+</template>
+<template name="modificarMovimientoCeenta">
+ <div class="modal fade"> 
+     
+        <div class="modal-dialog">
+            <div class="modal-content">
+ {{#autoForm  collection="Socios"  id="modificarMovimientosCueenta_" doc=docu scope="movimientosCuenta" setArrayItems=true  type="update"}}
+                <div class="modal-header">
+                  
+                  
+                   <div class="modal-title"><b> <h4>
+                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 
+                     <div style="float:right">
+                    <div class="form-inline"> {{> afQuickField style="width:150px" label=true  name=eti_nroRecivo id='nroRecivo' }}
+                        {{> afQuickField style="width:150px" label=false  name=eti_fecha id='fecha' }}</div>
+                    
+                    </div>
+                    </h4></b>
+                   
+                  
+                  </div>
+                
+                </div>
+                <div class="modal-body">
+                    
+                          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingTwo">
+      <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+           <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> <b>$ CUOTAS SOCIALES </b> <small>items y detalles</small>
+        </a>
+      </h4>
+    </div>
+    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+      <div class="panel-body">
+      <table class="table condensed">
+  <tr><th><b style="color:green">(+)CREDITOS</b></th><th><b  style="color:red">(-)DEBITOS</b></th></tr>
+  <tr> <td>{{> afQuickField style="width:120px" class="importesPagos" id="importeCuotaSocial" name=eti_importeCuotaSocial }}</td><td>{{> afQuickField style="width:120px" class="importesPagos" id="importeCargaSocial" name=eti_importeCargaSocial }}</td>  </tr>
+   <tr> <td>{{> afQuickField style="width:120px"  class="importesPagos" id="importeCarnet" name=eti_importeCarnet }}</td> </tr>
+  <tr>  <td>{{> afQuickField style="width:120px"  class="importesPagos" id="importeOtros" name=eti_importeOtros }}</td> </tr>
+  <tr>  <td>{{> afQuickField style="width:100px"  class="importesPagos" id="importeInscripcion" name=eti_importeInscripcion }}</td> </tr>
+  <tr>  </tr>
+  </table>
+          </div>
+    </div>
+  </div>
+   <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingTwo">
+      <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#importe_actividades" aria-expanded="false" aria-controls="importe_actividades">
+           <span class="glyphicon glyphicon-headphones" aria-hidden="true"></span> <b>$ ACTIVIDADES </b> <small>items y detalles</small>
+        </a>
+      </h4>
+    </div>
+    <div id="importe_actividades" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+      <div class="panel-body">
+        <table class="table condensed">
+  <tr><th><b style="color:green">(+)CREDITOS</b></th><th><b  style="color:red">(-)DEBITOS</b></th></tr>
+  <tr><td><table>
+  
+    {{#each actividades}} {{>actividadPago2 }} {{/each}}
+    </table></td><td> {{> afQuickField style="width:120px" id="importeCargaActividad" class="importesPagos" name=eti_importeCargaActividad }}</td>  </tr>
+
+  <tr>  </tr>
+  </table>
+     
+       
+          </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingOne">
+      <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#datosMovimiento" aria-expanded="false" aria-controls="collapseOne">
+         <span class="glyphicon glyphicon-file" aria-hidden="true"></span> <b>FORMA DE PAGOS </b> <small>$importes</small>
+        </a>
+      </h4>
+    </div>
+    <div id="datosMovimiento" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+     
+      <div class="panel-body">
+        
+         <div style="float:left">
+             {{> afQuickField style=""  name=eti_formaPago }}
+        {{> afQuickField style="width:90px"  id="importeFormaPago" name=eti_importeFormaPago }}
+        </div>
+        <div style="float:right">
+           {{> afQuickField style=""  id="hay2FormaPago" name=eti_hay2FormaPago }}
+          <div id="contenedor_formaPago2" style="display:none">
+               {{> afQuickField style=""  name=eti_formaPago2 }}
+        {{> afQuickField style="width:90px"  id="importeFormaPago2" name=eti_importeFormaPago2 }}
+               </div>
+        </div>
+        
+         
+      </div>
+    </div>
+  </div>
+</div>
+                  <div style="float:right">
+                    <h3>
+                      TOTAL $ <b>{{importeFinal}}</b>
+                    </h3>
+                  </div>
+      {{> afQuickField name=eti_detalle }}
+      {{> afQuickField type="hidden" name=eti_usuario  id="usuario" }}
+      <button type="submit" disabled="{{disableButtons}}" id="btnAceptar" style="width:100%" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> ACEPTAR</button>
+
+                     
+                  
+                </div>
+
+ {{/autoForm}}
+            </div>
+        </div>
+       
+    </div>
+
+</template>
+

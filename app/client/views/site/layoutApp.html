@@ -1,0 +1,244 @@
+<template name="buscadorSocios">
+  <span ><span style="width:200px;text-transform: uppercase">{{apellido}}</span> <small>{{nombre}}</small> <small style="color:green">({{dni}})</small><small style="color:blue">-{{nroSocio}}</small> </span>
+</template>
+<template name="layoutVacio">
+
+  <div class="container-fluid">
+    {{> yield}}
+  </div>
+
+</template>
+<template name="usuarioChat">
+<li class="dropdown">
+          <a class="dropdown-toggle" id="abrirChat" role="button" aria-haspopup="true" aria-expanded="false">
+            <span class="usuariosChat" id="usuario_{{id}}">
+	           
+	            {{nombreUsuario}}
+	<span id="cantidadMensajes_{{id}}" style="display:none" class="label label-danger"></span> 
+			</span>      
+            </a>
+        </li>
+
+</template>
+
+<template name="layoutApp">
+
+{{#if estaLogueado}}
+<nav class="navbar navbar-inverse navbar-static-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/"> <span class="glyphicon glyphicon-home" aria-hidden="true"></span> Inicio</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+         <li class="dropdown">
+          <a href="/socios" class="dropdown-toggle"  role="button" aria-haspopup="true" aria-expanded="false">
+            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+            Asociados
+            </a>
+        </li>
+        {{#if esAdmin}}
+         <li class="dropdown">
+          <a href="/nuevoSocio" class="dropdown-toggle"  role="button" aria-haspopup="true" aria-expanded="false">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            Alta Asociado
+            </a>
+        </li>
+        
+        
+      
+        
+         
+        
+        {{/if}}
+            <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+           <span class="glyphicon glyphicon-usd" aria-hidden="true"></span>
+            Caja
+            <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+             <li><a href="/caja" class="dropdown-toggle"  role="button" aria-haspopup="true" aria-expanded="false">
+           
+           Informe de Caja
+            </a></li>
+             <li><a href="/cierreCajas" class="dropdown-toggle"  role="button" aria-haspopup="true" aria-expanded="false">
+           
+           Archivo de Cajas
+            </a></li>
+            <li role="separator" class="divider"></li>
+             {{#if esAdmin}}
+              <li><a href="/movimientosGenerales" class="dropdown-toggle"  role="button" aria-haspopup="true" aria-expanded="false">
+           
+           Entradas/Salidas General
+            </a></li>
+            {{/if}}
+          
+          
+            
+           
+             
+          </ul>
+      
+        </li>
+       
+        {{#if esAdmin}}
+    <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+           <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+            Informes
+            <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+             <li><a href="/informeAltas" class="dropdown-toggle"  role="button" aria-haspopup="true" aria-expanded="false">
+           
+           Altas/Bajas
+            </a></li>
+             <li><a href="/informePagos" class="dropdown-toggle"  role="button" aria-haspopup="true" aria-expanded="false">
+           
+           Pagos
+            </a></li>
+          
+             <li><a href="/informeDebitos" class="dropdown-toggle"  role="button" aria-haspopup="true" aria-expanded="false">
+          
+            Debitos Automaticos
+            </a></li>
+            <li><a href="/informeCarnets" class="dropdown-toggle"  role="button" aria-haspopup="true" aria-expanded="false">
+           
+            Carnets
+            </a></li>
+            <li role="separator" class="divider"></li>
+              <li><a href="/informeMorosos" class="dropdown-toggle"  role="button" aria-haspopup="true" aria-expanded="false">
+           
+            Morosos
+            </a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="/informeGral" class="dropdown-toggle"  role="button" aria-haspopup="true" aria-expanded="false">
+           
+            General
+            </a></li>
+             
+          </ul>
+      
+        </li>
+      
+      <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+           <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+            Herramientas
+            <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+             <li><a href="/mensajes" class="dropdown-toggle"  role="button" aria-haspopup="true" aria-expanded="false">
+            <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
+           Enviar Mensajes
+            </a></li>
+             <li role="separator" class="divider"></li>
+           <!--  <li><a href="/importarPagos" class="dropdown-toggle"  role="button" aria-haspopup="true" aria-expanded="false">-->
+           <!-- <span class="glyphicon glyphicon-import" aria-hidden="true"></span>-->
+           <!--Importar Pagos DEBITO.A-->
+           <!-- </a></li>-->
+            <li><a href="/archivoBancos" class="dropdown-toggle"  role="button" aria-haspopup="true" aria-expanded="false">
+            <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+           Generar Archivo BANCO
+            </a></li>
+            <li><a href="/generacionDeudas" class="dropdown-toggle"  role="button" aria-haspopup="true" aria-expanded="false">
+            <span class="glyphicon glyphicon-retweet" aria-hidden="true"></span>
+            Generar Deuda Socios
+            </a></li>
+           
+             
+          
+           
+             
+          </ul>
+        </li>
+          <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+           <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+            Datos
+            <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+             <li><a href="/actividades" class="dropdown-toggle"  role="button" aria-haspopup="true" aria-expanded="false">
+            <span class="glyphicon glyphicon-headphones" aria-hidden="true"></span>
+           Actividades
+            </a></li>
+            <li><a href="/profesores" class="dropdown-toggle"  role="button" aria-haspopup="true" aria-expanded="false">
+            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+           Profesores
+            </a></li>
+            <li><a href="/grupos" class="dropdown-toggle"  role="button" aria-haspopup="true" aria-expanded="false">
+            <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+            Grupos
+            </a></li>
+             <li><a href="/planesEmpresa" class="dropdown-toggle"  role="button" aria-haspopup="true" aria-expanded="false">
+            <span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span>
+            Planes de Empresas
+            </a></li>
+             <li><a href="/cbuSocios" class="dropdown-toggle"  role="button" aria-haspopup="true" aria-expanded="false">
+            <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> 
+             Cbu Socios
+            </a></li>
+           
+             
+          </ul>
+        </li>
+         <li>  <div class="navbar-form navbar-left">
+        <div class="form-group">
+          <input id="nroSocioGenerico" style="width:100px;font-size:13px" type="number" class="form-control" placeholder="Nro Socio">
+          <input id="tipoSocioGenerico" value="P" style="width:40px;font-size:15px" class="form-control" placeholder="Tipo">
+          <button style="" id="btnBuscarSocio" type="button" class="btn btn-success "><span style="" class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span> </button>
+
+        </div>
+      </div></li>
+          {{/if}}
+      </ul>
+      
+      <ul class="nav navbar-nav navbar-right">
+        <div style="float:right;color:red;display:none" id='offline'><small style="padding:5px">offline</small> </div>
+         <div style="float:right;color:green;display:none" id='online'><small style="padding:5px">online</small> </div>
+       {{#each usuarios}}
+			{{> usuarioChat}}
+        {{/each}}
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{nombreUsuario}} <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+             {{#if esAdmin}}<li><a href="/datosSistema">Datos de Sistema</a></li>{{/if}}
+             
+             {{#if esAdmin}}<li><a href="/usuarios">Usuarios</a></li>{{/if}}
+            {{#if esAdmin}}<li><a href="/importarSocios">Importar Socios</a></li>{{/if}}
+            {{#if esAdmin}}<li><a href="/exportarSocios">Exportar Socios</a></li>{{/if}}
+            
+             {{#if esAdmin}}<li><a id="imprimirCarnetsDobles" href="#">Impresion CARNETS Dobles</a></li>{{/if}}
+            <li><a href="#" class="salirSistema">Salir</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+ {{/if}}
+  <aside>
+    {{> yield "aside"}}
+  </aside>
+
+  <div class="container-fluid">
+    {{> yield}}
+  </div>
+
+  <footer>
+    {{> footer}}
+  </footer>
+ 
+</template>
+<template name='footer'>
+<div class="bs-docs-footer">
+  <br><br>
+  <p align="center"><small>Sistema desarrolado por <b>SOFTER</b> softer.com.ar <br><small>Cualquier inconveniente comunicarse al <b>2975447771</b> o enviar correo a <b>info@softer.com.ar</b></small> </small></p>
+ </div>
+</template>

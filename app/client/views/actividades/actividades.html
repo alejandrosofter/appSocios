@@ -1,0 +1,64 @@
+<template name="actividades">
+ {{>moduloGral nombreModulo="Actividades" detalleModulo="Todas las actividades del club..." nombreTabla="tablaActividades" iconoModulo="headphones" callModifica=ejecutaModifica columnas=columnas tmplUpdate="editarActividad" tmplAcciones="accionesActividades" tmplNuevo="nuevaActividad" nombreColeccion="Actividades"}}
+</template>  
+
+<template name="editarActividad">
+{{> afQuickField name='nombreActividad'}}
+{{> afQuickField style="width:120px" name='importe' }}
+</template>
+
+<template name="nuevaActividad">
+{{> afQuickField name='nombreActividad'}}
+{{> afQuickField style="width:120px" name='importe' }}
+</template>
+
+<template name="accionesActividades"> 
+  <button title="Ver Socios" type="button" class="verSocios btn  btn-xs btn-success" aria-label="Left Align">  <span class="glyphicon glyphicon-user" aria-hidden="true"></span> </button>
+
+</template>
+<template name="accionesSociosActividades">
+    <button title="Quitar de Actividad" type="button" class="delete btn  btn-xs btn-danger" aria-label="Left Align">  <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button>
+    <button title="Activar Actividad" type="button" class="activar btn  btn-xs btn-success" aria-label="Left Align">  <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> </button>
+      
+</template>
+<template name="sociosActividad">
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+
+                <div class="modal-header">
+                 <h3><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <b>{{cantidadSocios}}</b> SOCIOS <b>{{actividad}}</b> <small> listado <b></b></small></h3>
+                 <input type="checkbox" id="soloActivos"> SOLO ACTIVOS
+                </div>
+              <div class="modal-body">
+                   <div class="form-group">
+    
+    <label  class="control-label">Socio</label>
+    <input class="form-control typeahead" name="buscaSocio" id="buscaSocio" data-template="cadaSocioBuscador" data-select="socioSeleccion" type="text" 
+ placeholder="Datos del Socio..." autocomplete="off" spellcheck="off" data-source="buscadorSocios"/>
+   <button title="Agregar Socio" type="button" class="agregarSocio btn  btn-sm btn-success" aria-label="Left Align">  <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> AGREGAR <b>SOCIO</b></button>
+    <span class="help-block"></span>
+  </div>
+               
+      
+                    <div id='printable'>
+                      {{> reactiveTable id="tablaActividadesSocios" settings=settings}}
+                    </div>
+<button style="width:100%" id="imprimir" class="btn btn-success">
+       <span  class="glyphicon glyphicon-print" aria-hidden="true"></span>
+       Imprimir
+     </button>
+              </div>
+
+          </div>
+      </div>
+  </div>
+</template>
+<template name="cadaSocio">
+  <tr><td>{{fecha}}</td><td>{{nroSocio}}</td><td>{{socio}}</td><td>{{tipo}}</td><td><button title="Quitar" type="button" class="delete btn  btn-xs btn-danger" aria-label="Left Align">  <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button>
+      </td></tr>   
+</template>
+
+<template name="socioAuto">
+<span class="label label-success">{{nroSocio}}</span> <b>  {{socio}} </b>  <span class="label label-primary">{{tipo}}</span>
+</template>

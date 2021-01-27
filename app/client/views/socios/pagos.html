@@ -1,0 +1,43 @@
+<template name="pagosSocio">
+  
+     <span style="cursor:pointer;float:right" id="btnAgregarPago" class="btn btn-success btn-xs" ><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><b><big> A</big></b>gregar</span> 
+ 
+   <h4><span class="glyphicon glyphicon-usd" aria-hidden="true"></span> PAGOS<small> de deudas</small>  </h4>
+
+{{> reactiveTable showNavigation='auto' showNavigationRowsPerPage="false" id="tablaPagos" settings=settings}}
+
+</template>
+<template name="accionesPagosSocio">
+<div class="acciones" >
+    <button title="Imprimir Comprobante" type="button" class="imprimir btn  btn-xs btn-primary" aria-label="Left Align">  <span class="glyphicon glyphicon-print" aria-hidden="true"></span> </button>
+</div>
+</template>
+
+<template name="nuevoPago">
+    <div class="modal fade"> 
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><b>PAGO</b> <span style="text-transform: capitalize">{{this.apellido}}</span></h4>
+                </div>
+                <div class="modal-body">
+                    {{#autoForm  collection="Pagos" id="nuevoPagoSocio_" type="insert"}}
+                           {{> afQuickField type="hidden"  name='idSocio' value=idSocio }}
+                          {{> afQuickField  name='fecha' }}
+                          {{> afQuickField  type="select-radio-inline" name='formaPago' }}
+                        
+                          {{> afQuickField id="deudasPago" options=opcionesDeuda name='deudasPago' }}
+                          {{> afQuickField  name='importe' editable=false id='importe' }}
+                        <button type="submit" disabled="{{disableButtons}}" id="btnAceptar" style="width:100%" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> ACEPTAR</button>
+
+                     
+                     {{/autoForm}}
+                  
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,66 @@
+<template name="imprimirCarnet">
+   <div class="modal fade " tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+       <div class="modal-header">
+                    <h4 class="modal-title">
+                      <button style="float:right" class="btnAcepta btn btn-success btn-sm"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> IMPRIMIR</button> 
+         </h4>
+                </div>
+                <div class="modal-body">
+                 
+                <canvas id="contenedor" width="890" height="800px"></canvas>
+                </div>
+
+    </div>
+  </div>
+</div>
+    
+   
+</template>
+<template name="carnetSocioPrint">
+
+</template>
+<template name="tarjetasSocio">
+   
+   <h5><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> CARNETS<small> del socio</small>  </h5>
+
+{{> reactiveTable showNavigation='auto' showNavigationRowsPerPage="false" id="tablaTarjetas" settings=settings}}
+ {{#if esAdmin}}
+     <span style="cursor:pointer;width:100%" id="btnAgregarTarjeta" class="btn btn-success btn-xs" ><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Agregar <b> Carnet</b></span> 
+ {{/if}}
+
+</template>
+<template name="accionesTarjetasSocios">
+<div class="acciones" >
+   <button title="Imprimir" type="button" class="imprimirCarnet btn  btn-xs btn-primary" aria-label="Left Align">  <span class="glyphicon glyphicon-print" aria-hidden="true"></span> </button>
+    <button title="Quitar" type="button" class="delete btn  btn-xs btn-danger" aria-label="Left Align">  <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button>
+  
+</div>
+</template>
+
+<template name="nuevaTarjetaSocio">
+    <div class="modal fade"> 
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><b> CARNET</b> <span style="text-transform: capitalize">{{this.apellido}}</span>{{this.nombre}}</h4>
+                </div>
+                <div class="modal-body">
+                     {{#autoForm  collection="Socios" id="nuevaTarjetaSocio_" doc=this scope="tarjetas" type="update-pushArray"}}
+                          
+                          {{> afQuickField  name='fecha' }}
+                          {{> afQuickField name="detalle" }}
+                        <button type="submit" disabled="{{disableButtons}}" id="btnAceptar" style="width:100%" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> ACEPTAR</button>
+
+                     
+                     {{/autoForm}}
+                  
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</template>

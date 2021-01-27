@@ -1,0 +1,52 @@
+<template name="generacionDeudas">
+   <div style="float:right">
+      <button id="btnAgregarGenerar" type="button" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> <b>AGREGAR</b> </button>
+  </div>
+  <h1><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> GENERACION CUOTAS <small> agregacion de cuotas del socio?</small></h1>
+
+{{> reactiveTable id="tablaGeneracionDeudas" settings=settings}}
+
+</template>
+<template name="accionesGeneracionDeudas">
+  <div class="acciones" style="display:none">
+  <button title="aplicar" type="button" class="aplicar btn  btn-xs btn-success" aria-label="Left Align">  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </button>
+    
+  <button title="Quitar" type="button" class="delete btn  btn-xs btn-danger" aria-label="Left Align">  <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button>
+    
+  </div>
+</template>
+<template name='nuevaGeneracionDeudas'>
+<h1><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> NUEVA <small> generacion deuda</small></h1>
+  {{#autoForm  collection="GeneracionDeudas" id="nuevaGeneracionDeudas_" type="insert"}}
+
+  <div class='col-md-6'>
+     <fieldset>
+      {{> afQuickField name='fecha'}}
+      {{> afQuickField name='detalle' }}
+       {{> afQuickField id='cargaActividades' name='cargaActividades' }}
+      <div style="display:none" id="contenedorActividades">{{> afQuickField style=esCuotaSocial name='actividadesExcluir'  }} </div>  
+    </fieldset>
+    <button type="submit" disabled="{{disableButtons}}" id="btnAceptar" style="width:100%" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> ACEPTAR</button>
+ 
+  </div>
+ {{/autoForm}}
+
+</template>
+<template name="cuotasGeneracion">
+    <div class="modal fade"> 
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span><b> DEUDAS</b> generados! </h4>
+                </div>
+                <div class="modal-body">
+                   {{> reactiveTable showNavigation='auto' showNavigationRowsPerPage="true" id="tablaCuotasGeneracion" settings=settings}}
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</template>

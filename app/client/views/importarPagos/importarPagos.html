@@ -1,0 +1,101 @@
+<template name="importarPagos">
+  
+    <div style="float:right">
+      <button id="btnAgregar" type="button" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-plus" aria-hidden="true"> <b>AGREGAR</b> importacion</span></button>
+
+  </div>
+   <h1><span class="glyphicon glyphicon-import" aria-hidden="true"></span> IMPORTACION PAGOS <small> .txt por devolucion banco</small></h1>
+
+
+{{> reactiveTable id="tablaImportarPagos" settings=settings}}
+  
+</template>
+<template name="editarImportarPagos">
+    <div style="float:right">
+      <button id="btnBuscar" type="button" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-refresh" aria-hidden="true"> <b>REFRESCAR</b> </span></button>
+
+  </div>
+   <h1><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> EDITAR IMPORTACION <small> .txt por devolucion banco</small></h1>
+<i>Aqui selecciona los socios asociados a cada devolucion:</i><br>
+    <div style="display:none" id="cargadorImportacion">
+    <i><small><b>Linking</b> Socio ... </small></i><img src="/images/loader2.gif" style="width:60px;height:60px" > 
+  </div>
+  {{> reactiveTable id="tablaItemsImportacion" settings=settings}}
+   <button id="btnAgregarImportacion" type="button" style="width:100%" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-plus" aria-hidden="true"> <b>AGREGAR</b> importacion</span></button>
+
+</template>
+<template name="itemsAsociacion">
+    <span style="cursor:pointer" class="agregarSocio label label-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"> </span></span>
+
+  {{#each sociosAsociados}}
+ <span style="cursor:pointer" class="quitarAsociacion label label-danger"><span class="glyphicon glyphicon-minus" aria-hidden="true"> </span></span>
+  {{nombreSocioAsoc}} <input type="number" id="importe_{{_id}}"  value="{{importe}}" class="importeAsociacion" style="width:60px">
+{{/each}}
+</template>
+<template name="accionesImportarPagos">
+
+  <div class="acciones" style="display:none">
+    <button title="Aplicar" type="button" class="aplicar btn  btn-xs btn-primary" aria-label="Left Align">  <span class="glyphicon glyphicon-off" aria-hidden="true"></span> </button>
+       <button title="Quitar Pagos" type="button" class="quitarPagos btn  btn-xs btn-warning" aria-label="Left Align">  <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span> </button>
+      
+     <button title="Editar" type="button" class="editar btn  btn-xs btn-success" aria-label="Left Align">  <span class="glyphicon glyphicon-search" aria-hidden="true"></span> </button>
+      
+  <button title="Quitar" type="button" class="delete btn  btn-xs btn-danger" aria-label="Left Align">  <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button>
+      
+  </div>
+</template>
+<template name="accionesItemsImportarPagos">
+  <div class="acciones" >
+     <button title="Quitar" type="button" class="quitarFila btn  btn-xs btn-danger" aria-label="Left Align">  <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button>
+      
+  </div>
+</template>
+
+<template name='nuevoImportarPagos'>
+<h1><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> NUEVO <small> importacion de .txt</small></h1>
+  {{#autoForm collection="ImportarPagos" id="nuevoImportarPagos_" type="insert"}}
+
+  <div class='col-md-6'>
+     <fieldset>
+       {{> afQuickField name='fechaCarga' id='fechaCarga'}}
+      {{> afQuickField name='descripcion' id='descripcion'}}
+       {{> afQuickField name='formaPago' id='formaPago'}}
+        {{> afQuickField name='estado' type="hidden" value="PENDIENTE" }}
+      {{> afQuickField style="width:120px" type='hidden'  id="archivo" name='archivo' }}
+         <div class="fileupload fileupload-new" data-provides="fileupload">
+   <span class="btn btn-file">
+      <span class="fileupload-new"></span>
+      <span class="fileupload-exists">{{file.label.de}}</span>
+      <input name="{{file.name}}" class="file-upload-input" method="{{file.method}}" type="file">
+    
+   </span>
+   <a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none">×</a>
+</div>
+    </fieldset>
+   
+  </div>
+ {{/autoForm}}
+
+</template>
+<template name="seleccionaSocio">
+   <div class="modal fade"> 
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                 <h3><span class="glyphicon glyphicon-home" aria-hidden="true"></span> ASIGNA SOCIO <small> a cbu {{cbu}}</small></h3>
+                </div>
+              <div class="modal-body">
+
+            {{> inputAutocomplete id="buscaSocios" settings=settingsSocios style="width:300px"  placeholder="Seleccione el socio (luego enter)..."}}
+  <input type="number" id="importe" placeholder="$ Importe" value="{{importe}}" style="width:150px">
+                <br><br><br>
+  <button id="btnAceptarCbu" style="width:100%" class="btn btn-success">
+    <span class="glyphicon glyphicon-home" aria-hidden="true"></span> 
+    ACEPTAR
+  </button>
+              </div>
+          </div>
+     </div>
+  </div>
+</template>

@@ -1,0 +1,127 @@
+  <template name="cantidadSociosInforme">
+  <div class="modal fade bs-example-modal-lg" tabindex="" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+       <div class="modal-header">
+                    <h4 class="modal-title"><b>SOCIOS</b> {{actividad}} </h4>
+                </div>
+                <div class="modal-body">
+                  {{> reactiveTable id="cantidaSociosTabla" settings=settings}}
+  </div>
+
+</div>
+</div>
+  </div>
+</template>
+<template name="cantidadSociosTmpl">
+<a href="#" class="cantidadSocios">{{cantidadSocios}} un. </a>
+</template>
+<template name="informeGral">
+  
+   <div  class='col-md-9'>
+     <div style="float:right;padding-top: 30px" class="form-inline">
+        <div class="form-group">
+
+        <input class="form-control fechas" id="anoSeleccion" type="number" value="{{anoSeleccion}}" style="width:80px;float:left" placeholder="Año"> 
+            <select class="form-control fechas" style="width: 130px" id="mes">{{#each mes in meses}}<option value="{{mes}}">{{mes}}</option>{{/each}}
+            </select> 
+            <button id="btnBuscar" type="button" class="btn btn-success fechas"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> </button>
+        </div>
+    </div>
+   <h1><span class="glyphicon glyphicon-stats" aria-hidden="true"></span> <b>INFORME GENERAL</b> <small> </small></h1>
+
+   
+   
+      <div id="printArea">
+        <h4><span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span> <b>ACTIVIDADES</b> <small> pagos</small></h4>
+       {{> reactiveTable id="tablaInformeGral" settings=settings}}
+     <h4><span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span> <b>CUOTAS SOCIALES</b> <small> pagos</small></h4>
+     {{> reactiveTable id="tablaCuotaSocial" settings=settingsCuotaSocial }}
+     <h4><span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span> <b>PLANES DE EMPRESAS</b> <small> cantidades</small></h4>
+     {{> reactiveTable id="tablaPlanesEmpresa" settings=settingsPlanesEmpresa }}
+     <h4><span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span> <b>CANTIDAD DE SOCIOS</b> <small> solo activos</small></h4>
+     {{> reactiveTable id="tablaPlanesEmpresa" settings=settingsPlanesEmpresaTipo }}
+     
+     </div>
+     
+      <button style="width:100%" id="imprimir" class="btn btn-success">
+       <span  class="glyphicon glyphicon-print" aria-hidden="true"></span>
+       Imprimir
+     </button>
+  </div>
+     
+ 
+</template>
+<template name="accionesSociosPlanEmpresa">
+<button title="Ver" type="button" class="verSociosPlanEmpresa btn  btn-xs btn-info" aria-label="Left Align">  <span class="glyphicon glyphicon-user" aria-hidden="true"></span> </button>
+</template>
+<template name="accionesInformeActividades">
+<button title="Ver" type="button" class="verSocios btn  btn-xs btn-warning" aria-label="Left Align">  <span class="glyphicon glyphicon-user" aria-hidden="true"></span> </button>
+</template>
+<template name="accionesInformeCuotaSocial">
+<button title="Ver" type="button" class="verSociosCuotas btn  btn-xs btn-success" aria-label="Left Align">  <span class="glyphicon glyphicon-user" aria-hidden="true"></span> </button>
+</template>
+<template name="accionesInformePlanTipo">
+<button title="Ver" type="button" class="verSociosPlanTipo btn  btn-xs btn-success" aria-label="Left Align">  <span class="glyphicon glyphicon-user" aria-hidden="true"></span> </button>
+</template>
+  <template name="sociosInformeCuotaSocial">
+  <div class="modal fade bs-example-modal-lg" tabindex="" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+       <div class="modal-header">
+                    <h4 class="modal-title"><b>{{tipoSocio}}/s</b> SOCIOS </h4>
+                </div>
+                <div class="modal-body">
+                  {{> reactiveTable id="tablaCuotaSocialInd" settings=settings}}
+  </div>
+
+</div>
+</div>
+  </div>
+</template>
+
+  <template name="sociosInformeActividades">
+  <div class="modal fade bs-example-modal-lg" tabindex="" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+       <div class="modal-header">
+                    <h4 class="modal-title"><b>{{actividad}}</b> SOCIOS </h4>
+                </div>
+                <div class="modal-body">
+                  {{> reactiveTable id="tablaActividadesInd" settings=settings}}
+  </div>
+
+</div>
+</div>
+  </div>
+</template>
+  <template name="sociosInformePlanEmpresa">
+  <div class="modal fade bs-example-modal-lg" tabindex="" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+       <div class="modal-header">
+                    <h4 class="modal-title"><b>{{planEmpresa}}</b> SOCIOS </h4>
+                </div>
+                <div class="modal-body">
+                  {{> reactiveTable  settings=settings}}
+  </div>
+
+</div>
+</div>
+  </div>
+</template>
+  <template name="sociosInformePlanEmpresaTipo">
+  <div class="modal fade bs-example-modal-lg" tabindex="" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+       <div class="modal-header">
+                    <h4 class="modal-title"><b>{{tipoSocio}}</b> SOCIOS </h4>
+                </div>
+                <div class="modal-body">
+                  {{> reactiveTable  settings=settings}}
+  </div>
+
+</div>
+</div>
+  </div>
+</template>

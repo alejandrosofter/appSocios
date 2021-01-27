@@ -1,0 +1,40 @@
+<template name="promocionesSocio">
+  
+     <span style="cursor:pointer;float:right" id="btnAgregarPromocion" class="btn btn-success btn-xs" ><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><b><big> A</big></b>gregar</span> 
+ 
+   <h4><span class="glyphicon glyphicon-gift" aria-hidden="true"></span> PROMOCIONES<small> asignado</small>  </h4>
+
+{{> reactiveTable showNavigation='auto' showNavigationRowsPerPage="false" id="tablaPagos" settings=settings}}
+
+</template>
+<template name="accionesPromocionesSocio">
+<div class="acciones" >
+    <button title="Quitar" type="button" class="delete btn  btn-xs btn-danger" aria-label="Left Align">  <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button>
+</div>
+</template>
+
+<template name="nuevaPromocionSocio">
+    <div class="modal fade"> 
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><b> PROMOCION</b> <span style="text-transform: capitalize">{{this.apellido}}</span></h4>
+                </div>
+                <div class="modal-body">
+                     {{#autoForm  collection="Socios" id="nuevaPromocionSocio_" doc=this scope="promociones" type="update-pushArray"}}
+                          
+                          {{> afQuickField  name='fecha' }}
+                          {{> afQuickField name="idPromocion" }}
+                        <button type="submit" disabled="{{disableButtons}}" id="btnAceptar" style="width:100%" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> ACEPTAR</button>
+
+                     
+                     {{/autoForm}}
+                  
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</template>

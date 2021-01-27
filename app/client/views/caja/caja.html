@@ -1,0 +1,179 @@
+<template name="imprimirCierreCaja">
+  <div class="modal fade bs-example-modal-lg" tabindex="" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+       <div class="modal-header">
+                    <h4 class="modal-title"><button id="btnPrint" style="float:right" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Imprimir</button> </h4>
+                </div>
+                <div class="modal-body">
+                  <div class="printSection" id="alta" style="padding:30px">
+                      {{>cabezal mes=mes ano=ano dia=dia}}
+                  <p style="text-align:center"><b>CIERRE DE CAJA</b> - {{usuario}}</p>
+                 <b>Es Caja General: </b>{{esCajaGral}} <br>
+                    <b>Fecha: </b> {{fechaCierre}}<br>
+                    <b>Detalle: </b> {{detalle}}<br>
+                  <div class="row" style="padding:30px">
+                <table class="table table-condensed">
+         <thead><th>Quien...</th><th>Detalle</th><th>$ Egreso</th><th>$ Ingreso</th></thead>
+         <tbody>
+         {{#each items}}
+          <tr><td>{{quien}}</td><td>{{detalle}}</td><td>{{importeDebe}}</td><td>{{importeHaber}}</td></tr>
+         {{/each}}
+       
+         </tbody>
+        </table>
+                     <div style="float:right"> 
+                     <h5 style="color:red">EGRESO $ <b>{{importeDebe}}</b></h5>
+                    <h5 style="color:green">INGRESO $ <b>{{importeHaber}}</b></h5>
+                    <h4 style="color:black">SALDO $ <b>{{importeSaldo}}</b></h4>
+</div>
+                     <br><br> <br><br>
+                    
+                    <div style="float:left">
+                      __________________________________
+                    FIRMA y ACLARACION
+                    </div>
+                   
+                  </div>
+                  
+</div>
+    
+  </div>
+
+</div>
+</div>
+  </div>
+</template>
+<template name="cierreCajas">
+    <div style="float:right"><button id="btnAgregar" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-plus"> <b>AGREGAR</b> Cierre</span></button></div>
+   <h1><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Archivo de Cajas <small> </small></h1>
+
+{{> reactiveTable id="tablaCierreCajas" settings=settings}}
+
+</template>
+<template name="filaTipoPago">
+  {{#if tieneDatos}}
+{{detalleForma}} <b>$ {{importeForma}}</b> <br>
+  {{/if}}
+</template>
+<template name="filaItemCaja">
+<tr><td><small>{{fecha}}</small></td><td>{{socioCaja}}</td><td>{{concepto}}</td><td>{{acts}}</td><td>{{nroRecibo}}</td><td>{{formaDePago}}</td><th>$ {{importeFinal}}</th></tr>
+</template>
+<template name="accionesCierreCajas">
+<button title="Imprimir" type="button" class="imprimir btn  btn-xs btn-success" aria-label="Left Align">  <span class="glyphicon glyphicon-print" aria-hidden="true"></span> </button>
+<button title="Quitar" type="button" class="quitar btn  btn-xs btn-danger" aria-label="Left Align">  <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button>
+</template>
+<template name="accionesCierreCajaItems">
+  <div class="acciones" style="display:none">
+    {{#if esCargadoLocal}}
+    <button title="Quitar" type="button" class="deleteItem btn  btn-xs btn-danger" aria-label="Left Align">  <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button>
+      {{/if}}
+  </div>
+</template>
+<template name="cerrarCaja">
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+
+                <div class="modal-header">
+                 <h3><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> CERRAR CAJA  <b>{{dia}}</b> <small> DEL DIA <b></b></small></h3>
+                </div>
+              <div class="modal-body">
+                 {{#autoForm  collection="CierreCaja" id="nuevoCierre_" type="insert"}}
+                <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#datos" aria-controls="datos" role="tab" data-toggle="tab">Datos</a></li>
+    <li role="presentation"><a href="#items" aria-controls="profile" role="tab" data-toggle="tab">Items <span class="label label-danger">{{cantidadItems}}</span></a></li>
+  </ul>
+                 <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="datos">
+                {{> afQuickField name='esCajaGral' id="esCajaGral" }}
+                {{> afQuickField name='fechaCierre' id="fechaCierre" value=fechaCierre }}
+                {{> afQuickField name='importeDebe' id="importeDebe" value="0" }}
+                {{> afQuickField name='importeHaber' id="importeHaber" value=importeHaber }}
+                {{> afQuickField name='detalle' }}
+      
+               
+                {{> afQuickField name='usuario'  type="hidden" value=usuario }}
+                
+                            
+    </div>
+    <div role="tabpanel" class="tab-pane" id="items">
+     <input id="quien_insert" placeholder="Quien...?" style="width:130px">
+      <input  id="detalle_insert" placeholder="Detalle?" style="width:300px">
+      <input  id="importeDebe_insert" placeholder="$ Egreso" style="width:80px">
+      <input  id="importeHaber_insert" placeholder="$ Ingreso" style="width:80px">
+      <button title="Agregar" type="button" id="btnAgregarItem" class="btn  btn-xs btn-success" aria-label="Left Align">  
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> AGREGAR </button>
+      {{> reactiveTable id="tablaItemsCaja" settings=settings}}
+    </div>
+  </div>
+                    <button style="width:100%" id="aceptar" class="btn btn-success">
+       <span  class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+       Aceptar
+     </button>
+                 {{/autoForm}}  
+            
+              </div>
+
+          </div>
+      </div>
+  </div>
+</template>
+<template name="caja">
+  
+   <h1><span class="glyphicon glyphicon-usd" aria-hidden="true"></span> <b>INFORME DE CAJA</b> <small> pagos de socios</small></h1>
+<div  class='col-md-8'>
+  <div class="form-inline">
+      <input id="fechaDesde"  style="width:120px" placeholder="Desde">
+       <input id="fechaHasta"  style="width:120px" placeholder="Hasta">
+   <select id="formaPago_" name="formaPago_">
+     <option value="TODAS">TODAS</option>
+    <option value="EFECTIVO">EFECTIVO</option>
+     <option value="POSNET">POSNET</option>
+  </select>
+<div class="form-group" style="display:{{veoAdmin}}">
+  <select  id="acts_" name="acts_">
+    {{#each actividades}}
+    <option {{seleccionado}} value="{{_id}}">{{nombreActividad}}</option>
+    {{/each}}
+  </select>
+    </div>
+  
+<div class="form-group" id="conteSoloMias" style="display:{{veoAdmin}}">
+   <input type="checkbox" checked id="soloMias"> <label for="soloMias">Solo mis pagos</label> 
+  </div>
+   <button id="btnBusca" class="btn btn-success">
+    <span  class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>
+       Buscar
+  </button>
+  </div>
+      <div id="printArea">
+        <br>
+        
+       <table class="table table-condensed">
+         <thead><th>Fecha</th><th>Socio</th><th>Concepto</th><th>Acts.</th><th>Nro Recibo</th><th>Forma Pago</th><th>Importe</th></thead>
+         <tbody>
+         {{#each items}}
+           {{>filaItemCaja}}
+         {{/each}}
+           <th></th><th></th><th></th><th></th><th></th><th>TOTAL</th><th><big>{{importeTotal}}</big></th>
+         </tbody>
+        </table>
+     <div style="float:right">
+       <h4>DETALLE <small><b>FORMA DE PAGO</b></small></h4>
+        {{#each porTipoPagos}}
+        {{>filaTipoPago}}
+         {{/each}}
+        <br> <br>
+        </div>
+     </div>
+     <br><br>
+  <br>
+      <button style="width:100%" id="imprimir" class="btn btn-success">
+       <span  class="glyphicon glyphicon-print" aria-hidden="true"></span>
+       Imprimir
+     </button>
+  </div>
+     
+ 
+</template>

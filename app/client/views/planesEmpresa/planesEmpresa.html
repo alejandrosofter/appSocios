@@ -1,0 +1,146 @@
+<template name="planesEmpresa">
+    <div style="float:right"><button id="btnAgregar" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-plus"> <b>AGREGAR</b> Plan Empresa</span></button></div>
+   <h1><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> PLANES EMPRESA <small> solo para empresas</small></h1>
+
+{{> reactiveTable id="tablaPlanesEmpresa" settings=settings}}
+
+</template>
+<template name="accionesPlanesEmpresa">
+  <div class="acciones" style="display:none">
+  <button title="Modificar" type="button" class="update btn  btn-xs btn-primary" aria-label="Left Align">  <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> </button>
+    
+    <button title="Quitar" type="button" class="delete btn  btn-xs btn-danger" aria-label="Left Align">  <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button>
+      
+  </div>
+</template>
+<template name="accionesSociosPlanesEmpresa">
+    <button title="Quitar de Grupo" type="button" class="delete btn  btn-xs btn-danger" aria-label="Left Align">  <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button>
+      
+</template>
+<template name="sociosPlanesEmpresa">
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+
+                <div class="modal-header">
+                 <h3><span class="glyphicon glyphicon-user" aria-hidden="true"></span> SOCIOS <b>{{planEmpresa}}</b> <small> listado <b></b></small></h3>
+                </div>
+              <div class="modal-body">
+                <div class="form-inline">
+                  {{> inputAutocomplete settings=settingsSocios style="width:300px" id="agregarSocio"  placeholder="Seleccione el socio (luego enter)..."}}
+                  <input id="fechaInicio" value="{{fechaInicioDef}}" placeholder="Fecha Comienzo" style="width:90px">
+                 
+                  <input id="fechaFin" placeholder="Fecha Vto" style="width:90px">
+                  
+                  <button title="Agregar" type="button" id="agregar" class=" btn  btn-xs btn-success" aria-label="Left Align">  <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> AGREGAR</button>
+                  <br> <br>
+                   <small><i><b style="color:red">*</b> formato de fechas <b>dd/mm/aaaa</b></i></small> 
+                  <small><i><b style="color:red">*</b> en caso de no tener fecha de vto dejar en <b>blanco</b></i></small>
+                  
+                </div>
+                    <div id='printable'>
+                      {{> reactiveTable id="tablaPlanesEmpresaSocios" settings=settings}}
+                    </div>
+<button style="width:100%" id="imprimir" class="btn btn-success">
+       <span  class="glyphicon glyphicon-print" aria-hidden="true"></span>
+       Imprimir
+     </button>
+              </div>
+
+          </div>
+      </div>
+  </div>
+</template>
+<template name="nuevoPlanEmpresa">
+    <div class="modal fade"> 
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><b>PLAN EMPRESA</b> <span style="text-transform: capitalize">{{this.apellido}}</span></h4>
+                </div>
+                <div class="modal-body">
+                     {{#autoForm  collection="PlanesEmpresa" id="nuevoPlanEmpresa_"  type="insert"}}
+                   <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">General</a></li>
+                     
+                     <li role="presentation"><a href="#actividades" aria-controls="tab" role="tab" data-toggle="tab">Actividades</a></li>
+    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Descripcion del Contrato</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="home">
+     {{> afQuickField  name='nombrePlanEmpresa' }}
+     {{> afQuickField name='fechaVto'  }}
+                 
+    </div>
+    <div role="tabpanel" class="tab-pane" id="actividades">
+      
+       {{> afQuickField name='actividades'  }}
+    </div>
+    <div role="tabpanel" class="tab-pane" id="profile">
+    {{> afQuickField name='detalleContrato'   }}
+    </div>
+  </div>
+                     
+                          
+                         
+                 
+                      <button type="submit" disabled="{{disableButtons}}" id="btnAceptar" style="width:100%" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> ACEPTAR</button>
+ 
+                     {{/autoForm}}
+                  
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</template>
+<template name="modificarPlanEmpresa">
+    <div class="modal fade"> 
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span><b> PLAN EMPRESA</b> <span style="text-transform: capitalize">{{this.apellido}}</span></h4>
+                </div>
+                <div class="modal-body">
+                  {{#autoForm  collection="PlanesEmpresa" id="nuevoPlanEmpresa_" doc=this  type="update"}}
+                   <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">General</a></li>
+                     
+                     <li role="presentation"><a href="#actividades" aria-controls="tab" role="tab" data-toggle="tab">Actividades</a></li>
+    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Descripcion del Contrato</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="home">
+     {{> afQuickField  name='nombrePlanEmpresa' }}
+                          {{> afQuickField name='fechaVto'  }}
+    </div>
+    <div role="tabpanel" class="tab-pane" id="actividades">
+      
+       {{> afQuickField name='actividades'  }}
+    </div>
+    <div role="tabpanel" class="tab-pane" id="profile">
+    {{> afQuickField name='detalleContrato'  }}
+    </div>
+  </div>
+                     
+                          
+                         
+                 
+                      <button type="submit" disabled="{{disableButtons}}" id="btnAceptar" style="width:100%" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> ACEPTAR</button>
+ 
+                     {{/autoForm}}
+                  
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,43 @@
+<template name="informeInaes">
+
+   <div  class='col-md-9'>
+     <div style="float:right;padding-top: 30px" class="form-inline">
+        <div class="form-group">
+
+        <input class="form-control fechas" id="anoSeleccion" type="number" value="{{anoSeleccion}}" style="width:80px;float:left" placeholder="Año"> 
+            <select class="form-control fechas" style="width: 130px" id="mes">{{#each mes in meses}}<option value="{{mes}}">{{mes}}</option>{{/each}}
+            </select> 
+            <button id="btnBuscar" type="button" class="btn btn-success fechas"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> </button>
+        </div>
+    </div>
+   <h1><span class="glyphicon glyphicon-stats" aria-hidden="true"></span> <b>INFORME INAES</b> <small> </small></h1>
+
+   
+   
+      <div id="printArea">
+      	<h3> <b>POR ACTIVIDAD</b> <small> </small></h3>
+      	{{#each actividad in actividades}}
+      		{{>actividadInaes doc=actividad}}
+      		
+      	{{/each}}
+     </div>
+     
+      <button style="width:100%" id="imprimir" class="btn btn-success">
+       <span  class="glyphicon glyphicon-print" aria-hidden="true"></span>
+       Imprimir
+     </button>
+  </div>
+     
+</template>
+<template name="actividadInaes">
+	<div  class='col-md-4'>
+<div class=" panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title"><b>{{actividad}}</b></h3>
+  </div>
+  <div id="actividad_{{idActividad}}" class="panel-body">
+    
+  </div>
+</div>
+</div>
+</template>

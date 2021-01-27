@@ -1,0 +1,133 @@
+<template name="impresionPlanEmpresa">
+  <div class="modal fade bs-example-modal-lg" tabindex="" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+       <div class="modal-header">
+                    <h4 class="modal-title"><button id="btnPrint" style="float:right" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Imprimir</button> </h4>
+                </div>
+                <div class="modal-body">
+                  <div class="printSection" id="alta" style="padding:30px">
+                      {{>cabezal mes=mes ano=ano dia=dia}}
+                  <p style="text-align:center"><b>ALTA PLAN EMPRESA</b> - FICHA PERSONAL</p>
+                 
+                  <div class="row" style="padding:30px">
+                 <div class="col-md-7">
+                     <p><big><b>NRO SOCIO: </b><span style="text-transform: uppercase">{{socio.nroSocio}}</span></big></p>
+                      <p><b>NOMBRE: </b><span style="text-transform: uppercase">{{socio.nombre}}</span></p>
+                      <p><b>APELLIDO: </b><span style="text-transform: capitalize">{{socio.apellido}}</span></p>
+                      <p><b>DOMICILIO: </b><span style="text-transform: capitalize">{{socio.domicilio}}</span></p>
+                      <p><b>LOCALIDAD: </b><span style="text-transform: capitalize">{{socio.localidad}}</span></p>
+                      <p><b>DOMICILIO DE PAGO: </b><span style="text-transform: capitalize">COMODORO RIVADAVIA</span></p>
+                      <p><b>LUGAR DE PAGO: </b><span style="text-transform: capitalize">JOSE ALVAREZ NRO 37</span></p>
+                      <p><b>TELEFONO: </b><span style="text-transform: capitalize">{{socio.telefonoFijo}}/{{socio.telefonoMobil}}</span></p>
+              
+                          <p><b>EMAIL: </b><span style="text-transform: ">{{socio.email}}</span></p>
+                       <p><b>FECHA NACIMIENTO: </b><span style="text-transform: ">{{fechaNac}}</span></p>
+                      <p><b>DNI: </b>{{socio.dni}}</p>
+                     <p><b>EMPRESA: </b><span style="text-transform: capitalize">{{empresa}}</span></p>
+                      <p><b>FECHA ALTA: </b><span style="text-transform: capitalize">{{fechaAlta}}</span></p>
+                      <p><b>ESTADO CIVIL: </b><span style="text-transform: capitalize">{{socio.estadoCivil}}</span></p>
+                    </div>
+                     <br><br>
+                      <div class="col-md-10">
+                       <h4><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> LEER ATENTAMENTE!</h4>
+                      <p>
+                     
+                      CONDICIONES DEL PLAN <b>{{nombrePlanEmpresa}}</b> {{#if tieneVto}}con vigencia hasta <b>{{fechaVtoPlan}}</b>{{/if}}, un vez concluido este plan deberá consultar en administración para su renovación o para el alta de nuevas actividades. <br>
+                        {{contratoPlanEmpresa}}
+                       
+                        
+                    </p>
+                      </div>
+                     <br><br> <br><br>
+                    
+                    <div style="float:right">
+                    <br><br> <br><br>
+                      __________________________________
+                    FIRMA y ACLARACION
+                    </div>
+                   
+                  </div>
+                  
+</div>
+    
+  </div>
+
+</div>
+</div>
+  </div>
+</template>
+<template name="planesEmpresaSocio">
+   <h5><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> 
+    PLANES EMPRESA <small> asignados al socio</small>  </h5>
+ 
+{{> reactiveTable showNavigation='auto' showNavigationRowsPerPage="false" id="tablaPlanEmpresas" settings=settings}}
+ {{#if esAdmin}}
+     <span style="cursor:pointer;width:100%" id="agregarPlanEmpresaSocio" class="btn btn-success btn-xs" ><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Agregar<b> PlanEmpresa</b></span> 
+ {{/if}}
+</template>
+<template name="accionesPlanEmpresaSocios">
+<div class="acciones" >
+{{#if estaAplicado}}
+  <button title="Aplicar Plan" type="button" class="aplicarPlan btn  btn-xs btn-info" aria-label="Left Align">  <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> </button>
+  {{/if}}
+  <button title="Imprimir" type="button" class="imprimir btn  btn-xs btn-success" aria-label="Left Align">  <span class="glyphicon glyphicon-print" aria-hidden="true"></span> </button>
+    <button title="Modificar" type="button" class="update btn  btn-xs btn-primary" aria-label="Left Align">  <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> </button>
+  <button title="Quitar" type="button" class="quitar btn  btn-xs btn-danger" aria-label="Left Align">  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> </button>
+
+</div>
+</template>
+<template name="modificaPlanEmpresaSocio">
+    <div class="modal fade"> 
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span><b> MODIFICA</b> de PLAN EMPRESA <span style="text-transform: capitalize">{{docu.apellido}}</span></h4>
+                </div>
+                <div class="modal-body">
+                     {{#autoForm  collection="Socios"  id="modificaPlanEmpresaSocio_" doc=docu scope="planesEmpresa" setArrayItems=true  type="update"}}
+                        {{> afQuickField  name=eti_fechaInicio }}
+                        {{> afQuickField name=eti_idPlanEmpresa style="width:200px;" }}
+                        {{> afQuickField  id="estaInactiva"  name=eti_estaInactiva }}
+                        <div style="display:none" id="conte_vto"> {{> afQuickField  name=eti_fechaFinaliza}} </div>
+                          <button type="submit" disabled="{{disableButtons}}" id="btnAceptar" style="width:100%" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> ACEPTAR</button>
+
+                     {{/autoForm}}
+                  
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</template>
+<template name="nuevaPlanEmpresaSocio">
+    <div class="modal fade"> 
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><b>PlanEmpresa</b> <span style="text-transform: capitalize">{{this.apellido}}</span></h4>
+                </div>
+                <div class="modal-body">
+                     {{#autoForm  collection="Socios" id="nuevaPlanEmpresaSocio_" doc=this scope="planesEmpresa" type="update-pushArray"}}
+                          
+                          {{> afQuickField  name='fechaInicio' }}
+                          {{> afQuickField name='idPlanEmpresa' style="width:200px;" }}
+                   {{> afQuickField  id="estaInactiva"  name="estaInactiva" }}
+                  <div style="display:none" id="conte_vto"> {{> afQuickField  name="fechaFinaliza"}} </div>
+                          
+                
+                        <button type="submit" disabled="{{disableButtons}}" id="btnAceptar" style="width:100%" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> ACEPTAR</button>
+
+                     
+                     {{/autoForm}}
+                  
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</template>

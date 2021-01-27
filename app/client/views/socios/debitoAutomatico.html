@@ -1,0 +1,163 @@
+<template name="impresionDebitoBaja">
+  <div class="modal fade bs-example-modal-lg" tabindex="" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+       <div class="modal-header">
+                    <h4 class="modal-title"><button id="btnPrint" style="float:right" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Imprimir</button> </h4>
+                </div>
+                <div class="modal-body">
+                  <div class="printSection" id="alta" style="padding:30px">
+                      {{>cabezal mes=mes ano=ano dia=dia}}
+                  <p style="text-align:center"><b>FORMULARIO DE DEBITO AUTOMATICO</b> - BAJA DEBITO AUTOMATICO</p>
+                 <div style="float:right"> <small class="text-muted">Comodoro Rivadavia,{{dia}} de {{mes}} del {{ano}} </small></div>
+                  <div class="row" style="padding:30px">
+                    Sres. Banco {{socio.banco}}: <br>
+                     De mi mayor consideración: <br>
+Quien suscribe <b>{{alta.titular}}</b>, con CUIL <b>{{alta.cuil}}</b> AUTORIZO a la BAJA DEL DÉBITO MENSUAL DE LA SUMA DE<b> $ {{importe}}</b> en mi <b>{{tipoCuenta}}</b>, Nro <b>{{alta.nroCuenta}}</b>; 
+                    CBU <b>{{alta.cbu}}</b> del Banco <b>{{alta.banco}}</b>. Dicho monto no será más debitado a partir de la fecha <b>{{fechaBaja}}</b>.
+                    Sin otro particular saludo a usted muy atentamente.<br>
+                    <br><br><br><br><br><br>
+
+                  _____________________________________________________<br>
+                    ADMINISTRACION
+                    <br><br><br>
+                  </div>
+                  
+                  
+                    
+                  
+
+</div>
+    
+  </div>
+
+</div>
+</div>
+  </div>
+</template>
+<template name="impresionDebito">
+  <div class="modal fade bs-example-modal-lg" tabindex="" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+       <div class="modal-header">
+                    <h4 class="modal-title"><button id="btnPrint" style="float:right" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Imprimir</button> </h4>
+                </div>
+                <div class="modal-body">
+                  <div class="printSection" id="alta" style="padding:30px">
+                      {{>cabezal mes=mes ano=ano dia=dia}}
+                  <p style="text-align:center"><b>FORMULARIO DE DEBITO AUTOMATICO</b> - ALTA SOCIO</p>
+                 <div style="float:right"> <small class="text-muted">Comodoro Rivadavia,{{dia}} de {{mes}} del {{ano}} </small></div>
+                  <div class="row" style="padding:30px">
+                    Sres. Banco {{socio.banco}}: <br>
+                     De mi mayor consideración: <br>
+Quien suscribe <b>{{alta.titular}}</b>, con CUIL <b>{{alta.cuil}}</b> AUTORIZO el DÉBITO MENSUAL DE LA SUMA DE<b> $ {{importe}}</b> en mi <b>{{alta.tipoCuenta}}</b>, Nro <b>{{alta.nroCuenta}}</b>; 
+                    CBU <b>{{alta.cbu}}</b> del Banco <b>{{alta.banco}} </b>a partir de <b>{{fechaDebito}}</b>. Dicho monto se debita en concepto de la cuota social del
+                    socio <b><small>{{tipoSocio}}</small> {{razonSocial}}</b> NRO <b> {{socio.nroSocio}} </b>. <br>
+                    Sin otro particular saludo a usted muy atentamente.<br>
+                    <br><br><br><br><br><br>
+
+                  _____________________________________________________<br>
+                    <br><br><br>
+                  </div>
+                  
+                  
+                    
+                  
+
+</div>
+    
+  </div>
+
+</div>
+</div>
+  </div>
+</template>
+<template name="debitosAutomaticos">
+  
+   <h5 style="float:left"><span  class="glyphicon glyphicon-repeat" aria-hidden="true"></span> DEBITOS AUTOMATICOS<small> para cuota social</small>  </h5>
+
+{{> reactiveTable showNavigation='auto' showNavigationRowsPerPage="false" id="tablaDebitosAutomaticos" settings=settings}}
+   {{#if esAdmin}}
+      <span style="cursor:pointer;width:100%" id="btnAgregarDebito" class="btn btn-success btn-xs" ><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Agregar <b>Debito Automatico</b></span> 
+  {{/if}}
+<br> <br>
+</template>
+<template name="accionesDebitosAutomatico">
+<div class="acciones" >
+  <button title="Activo" type="button" class="default btn  btn-xs btn-warning" aria-label="Left Align">  <span class="glyphicon glyphicon-star" aria-hidden="true"></span> </button>
+    <button title="Imprimir" type="button" class="imprimir btn  btn-xs btn-primary" aria-label="Left Align">  <span class="glyphicon glyphicon-print" aria-hidden="true"></span> </button>
+  <button title="Editar" type="button" class="editar btn  btn-xs btn-success" aria-label="Left Align">  <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> </button>
+  
+  <button title="Quitar" type="button" class="quitar btn  btn-xs btn-danger" aria-label="Left Align">  <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button>
+</div>
+</template>
+
+<template name="nuevoDebitoAutomatico">
+    <div class="modal fade"> 
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                                       <h4 class="modal-title"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><b>AGREGAR</b> <small>debito automatico</small></h4>
+                </div>
+                <div class="modal-body">
+                     {{#autoForm  collection="Socios" id="nuevoDebitoAutomatico_" doc=this scope="debitoAutomatico" type="update-pushArray"}}
+                          
+                         {{> afQuickField name='cbu' style=""}}
+         {{> afQuickField name='banco' style=""}}
+       {{> afQuickField name='titular' style=""}}
+       {{> afQuickField name='tipoCuenta' style=""}}
+      {{> afQuickField name='nroCuenta' style=""}}
+      {{> afQuickField name='cuil' style=""}}
+                   {{> afQuickField name='fechaInicio' style="width:140"}} 
+                  <form class="form-inline">   {{> afQuickField name='estaInactiva' id='estaInactiva' style=""}}  
+                    <div id="fechaFin" style="display:none">
+                     {{> afQuickField  id="fechaFinaliza" name='fechaFinaliza' style=""}}
+                    </div> </form>
+                       <div class="modal-footer">
+         <button type="submit" disabled="{{disableButtons}}"  id="btnAcepta" style="width:100%" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> ACEPTAR</button>
+ 
+      </div>
+                     {{/autoForm}}
+                
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</template>
+<template name="modificaDebitoAutomatico">
+    <div class="modal fade"> 
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                                       <h4 class="modal-title"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span><b>EDITAR</b> <small>debito automatico</small></h4>
+                </div>
+                <div class="modal-body">
+                     {{#autoForm  collection="Socios"  id="modificaActividadSocio_" doc=docu scope="actividades" setArrayItems=true  type="update"}}
+                         {{> afQuickField name=eti_cbu style=""}}
+         {{> afQuickField name=eti_banco style=""}}
+       {{> afQuickField name=eti_titular style=""}}
+       {{> afQuickField name=eti_tipoCuenta style=""}}
+      {{> afQuickField name=eti_nroCuenta style=""}}
+      {{> afQuickField name=eti_cuil style=""}}
+              {{> afQuickField name=eti_fechaInicio style=""}}    
+                   <form class="form-inline">   {{> afQuickField name=eti_estaInactiva id='estaInactiva' style=""}}  
+                    <div id="fechaFin" style="{{muestraFechaFin}}">
+                     {{> afQuickField  id="fechaFinaliza" name=eti_fechaFinaliza style=""}}
+                    </div> </form>
+                       <div class="modal-footer">
+         <button type="submit" disabled="{{disableButtons}}"  id="btnAcepta" style="width:100%" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> ACEPTAR</button>
+ 
+      </div>
+                     {{/autoForm}}
+                
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</template>

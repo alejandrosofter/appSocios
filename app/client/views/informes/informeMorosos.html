@@ -1,0 +1,48 @@
+<template name="informeMorosos">
+  
+   <div  class='col-md-9'>
+     <div style="float:right;padding-top: 30px" class="form-inline">
+        <div class="form-group">
+
+       
+       
+            <button id="btnBuscar" type="button" class="btn btn-success fechas"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> </button>
+        </div>
+    </div>
+    <div id="printArea">
+   <h1><span class="glyphicon glyphicon-stats" aria-hidden="true"></span> <b>INFORME MOROSOS</b> <small> </small></h1>
+
+   
+   
+      
+       {{> reactiveTable id="tablaMorosos" settings=settings}}
+     </div>
+     
+      <button style="width:100%" id="imprimir" class="btn btn-success">
+       <span  class="glyphicon glyphicon-print" aria-hidden="true"></span>
+       Imprimir
+     </button>
+  </div>
+     
+ 
+</template>
+
+<template name="accionesMorosos">
+<button title="Ver Socios" type="button" class="verSocios btn  btn-xs btn-success" aria-label="Left Align">  <span class="glyphicon glyphicon-user" aria-hidden="true"></span> </button>
+  </template>
+
+    <template name="informeMorosos_IND">
+  <div class="modal fade bs-example-modal-lg" tabindex="" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+       <div class="modal-header">
+                    <h4 class="modal-title"><b>{{socio}}</b> SOCIO </h4>
+                </div>
+                <div class="modal-body">
+                  {{> reactiveTable id="tablaDetalleMorosos" settings=settings}}
+  </div>
+
+</div>
+</div>
+  </div>
+</template>

@@ -1,0 +1,247 @@
+<template name="cbuSocios">
+    <div style="float:right">
+      <button id="btnInvertir" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-plus"> <b>INVERTIR </b> SELECCION</span></button>
+  <button id="btnBorrar" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-remove"> <b>QUITAR </b> SELECCION</span></button>
+      <button id="btnAgregar" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-plus"> <b>AGREGAR</b> cbu</span></button>
+    </div>
+   <h1><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> CBU/s <small> de socios</small></h1>
+<div style="float:right" class="form-inline"> <b>BANCO: </b> {{> filtroBancos}}  <b>CBU: </b> {{> filtroCbu}} 
+ </div>
+{{> reactiveTable id="tablaCbuSocios" settings=settings}}
+
+</template>
+<template name="cadaSocioCbu">
+    <span class="cadaSocioNombreCbu" consultado="" id="nombreSocio_{{idSocio}}">{{nombreSocio}}</span> <br>
+
+</template>
+<template name="sociosCbuTempl">
+    {{#each socios}}
+        {{> cadaSocioCbu}}
+    {{/each}}
+    
+</template>
+<template name="cbuSociosAsignados">
+    <div style="float:right"><button id="btnAgregar" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-plus"> <b>AGREGAR</b> socio</span></button></div>
+   <h1><span class="glyphicon glyphicon-user" aria-hidden="true"></span> {{nroCbu}}<small> asignados </small></h1>
+
+{{> reactiveTable id="tablaCbuSociosAsignados" settings=settings}}
+
+</template>
+
+<template name="filtroBancos">
+  <select class="form-control estadoBancos">
+      <option value="">TODOS</option>
+      <option value="CHUBUT">CHUBUT</option>
+      <option value="OTROS">OTROS</option>
+    </select>
+</template>
+<template name="filtroCbu">
+<input id="filtroCbu" style="width:250px; font-size:13px" type="number" class="form-control" placeholder="Nro cbu">
+</template>
+
+<template name="impresionCbuSocio">
+  <div class="modal fade bs-example-modal-lg" tabindex="" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+       <div class="modal-header">
+                    <h4 class="modal-title"><button id="btnPrint" style="float:right" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Imprimir</button> </h4>
+                </div>
+                <div class="modal-body">
+                  <div class="printSection" id="alta" style="padding:30px">
+                      {{>cabezal mes=mes ano=ano dia=dia}}
+                  <p style="text-align:center"><b>FORMULARIO DE DEBITO AUTOMATICO</b> - ALTA SOCIO</p>
+                 <div style="float:right"> <small class="text-muted">Comodoro Rivadavia,{{dia}} de {{mes}} del {{ano}} </small></div>
+                  <div class="row" style="padding:30px">
+                    Sres. Banco {{banco}}: <br>
+                     De mi mayor consideración: <br>
+Quien suscribe <b>{{razonSocial}}</b>, con CUIL <b>{{cuil}}</b> AUTORIZO el DÉBITO MENSUAL DE LA SUMA DE<b> $ {{importe}}</b> en mi <b>{{tipoCuenta}}</b>, Nro <b>{{nroCuenta}}</b>; 
+                    CBU <b>{{cbu}}</b> del Banco <b>{{banco}} </b>a partir de <b>{{fechaDebito}}</b>. Dicho monto se debita en concepto de la cuota social del
+                    socio <b><small>{{tipoSocio}}</small> {{nombreSocio}}</b> NRO <b> {{nroSocio}} </b>. <br>
+                    Sin otro particular saludo a usted muy atentamente.<br>
+                    <br><br><br><br><br><br>
+
+                  _____________________________________________________<br>
+                    <br><br><br>
+                  </div>
+                  
+                  
+                    
+                  
+
+</div>
+    
+  </div>
+
+</div>
+</div>
+  </div>
+</template>
+
+<template name="accionesCbuSocios">
+  <div class="acciones" style="display:none">
+    <button title="Seleccionar" type="button" class="seleccionar btn  btn-xs btn-warning" aria-label="Left Align">  <span class="glyphicon glyphicon-screenshot" aria-hidden="true"></span> </button> 
+  <button title="Ver Socios" type="button" class="verSocios btn  btn-xs btn-success" aria-label="Left Align">  <span class="glyphicon glyphicon-user" aria-hidden="true"></span> </button>
+     <button title="Modificar" type="button" class="update btn  btn-xs btn-primary" aria-label="Left Align">  <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> </button>
+    
+    <button title="Quitar" type="button" class="delete btn  btn-xs btn-danger" aria-label="Left Align">  <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button>
+      
+  </div>
+</template>
+
+<template name="accionesAsignacionSocios">
+  <div class="acciones" style="display:none">
+      <button title="Imprimir" type="button" class="imprimir btn  btn-xs btn-success" aria-label="Left Align">  <span class="glyphicon glyphicon-print" aria-hidden="true"></span> </button>
+    
+  <button title="Modificar" type="button" class="update btn  btn-xs btn-primary" aria-label="Left Align">  <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> </button>
+    
+    <button title="Quitar" type="button" class="delete btn  btn-xs btn-danger" aria-label="Left Align">  <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button>
+      
+  </div>
+</template>
+<template name="cadaSocioBuscador">
+    <span class="{{clase}}"><small>  <b>{{apellido}}</b>, {{nombre}} <small><b>({{nroSocio}})</b></small></small></span>
+</template>
+
+<template name="nuevoAsignacionCbuSocio">
+    <div class="modal fade"> 
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                                       <h4 class="modal-title"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><b>ASIGNAR</b> <small>socio a CBU</small></h4>
+                </div>
+                <div class="modal-body">
+                     {{#autoForm  collection="CbuSocios" id="nuevaAsignacionSocio_" doc=this scope="socios" type="update-pushArray"}}
+                     <div class="form-group">
+    
+    <label for="JF5hJ6z8SMXLsvuPG" class="control-label">Socio</label>
+    <input class="form-control typeahead" name="buscaSocio" id="buscaSocio" data-template="cadaSocioBuscador" data-select="socioSeleccion" type="text" 
+ placeholder="Datos del Socio..." autocomplete="off" spellcheck="off" data-source="buscadorSocios"/>
+  
+    <span class="help-block"></span>
+  </div>
+ 
+                         {{> afQuickField type="hidden" id="idSocio" name='idSocio' style=""}}
+                         {{> afQuickField type="hidden" id="nombreSocio" name='nombreSocio' style=""}}
+                         {{> afQuickField name='comentario' style=""}}
+                         {{> afQuickField name='_id' id='idItem' type="hidden" style=""}}
+                   {{> afQuickField name='fechaInicio' style="width:140"}} 
+                  <form class="form-inline">   {{> afQuickField name='estaInactiva' id='estaInactiva' style=""}}  
+                    <div id="fechaFin" style="display:none">
+                     {{> afQuickField  id="fechaFinaliza" name='fechaFinaliza' style=""}}
+                    </div> </form>
+                       <div class="modal-footer">
+         <button type="submit" disabled="{{disableButtons}}"  id="btnAcepta" style="width:100%" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> ACEPTAR</button>
+ 
+      </div>
+                     {{/autoForm}}
+                
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="modificarAsignacionCbuSocio">
+    <div class="modal fade"> 
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                                       <h4 class="modal-title"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span><b>MODIFICAR</b> <small> ASIGNACION socio a CBU</small></h4>
+                </div>
+                <div class="modal-body">
+                     {{#autoForm  collection="CbuSocios" id="modificaAsignacionSocio_" doc=this scope="socios" doc=docu  setArrayItems=true  type="update"}}
+                               <div class="form-group">
+    
+    <label for="JF5hJ6z8SMXLsvuPG" class="control-label">Socio</label>
+    <input class="form-control typeahead" name="buscaSocio" id="buscaSocio" data-template="cadaSocioBuscador" data-select="socioSeleccion" type="text" 
+ placeholder="Datos del Socio..." autocomplete="off" spellcheck="off" data-source="buscadorSocios"/>
+  
+    <span class="help-block"></span>
+  </div>
+                         {{> afQuickField type="hidden" id="idSocio" name=eti_idSocio style=""}}
+                         {{> afQuickField type="hidden" id="nombreSocio" name=eti_nombreSocio style=""}}
+                         {{> afQuickField name=eti_comentario style=""}}
+                   {{> afQuickField name=eti_fechaInicio style="width:140"}} 
+                  <form class="form-inline">   {{> afQuickField name=eti_estaInactiva id='estaInactiva' style=""}}  
+                    <div id="fechaFin" style="{{muestraFechaFin}}">
+                     {{> afQuickField  id="fechaFinaliza" name=eti_fechaFinaliza style=""}}
+                    </div> </form>
+                       <div class="modal-footer">
+         <button type="submit" disabled="{{disableButtons}}"  id="btnAcepta" style="width:100%" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> ACEPTAR</button>
+ 
+      </div>
+                     {{/autoForm}}
+                
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="nuevoCbuSocios">
+    <div class="modal fade"> 
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                                       <h4 class="modal-title"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><b>AGREGAR</b> <small>CBU Socios</small></h4>
+                </div>
+                <div class="modal-body">
+                     {{#autoForm  collection="CbuSocios" id="nuevoCbuSocios_" type="insert"}}
+                           {{> afQuickField name='banco' style=""}}
+                         {{> afQuickField name='cbu' id="cbu" style="width:230px"}}
+        
+       {{> afQuickField name='titular' style=""}}
+       {{> afQuickField name='tipoCuenta' style=""}}
+      {{> afQuickField name='nroCuenta' style=""}}
+      {{> afQuickField name='cuil' style=""}}
+                 
+                       <div class="modal-footer">
+         <button type="submit" disabled="{{disableButtons}}"  id="btnAcepta" style="width:100%" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> ACEPTAR</button>
+ 
+      </div>
+                     {{/autoForm}}
+                
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</template>
+<template name="modificarCbuSocios">
+    <div class="modal fade"> 
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                                       <h4 class="modal-title"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><b>MODIFICAR</b> <small>CBU Socios</small></h4>
+                </div>
+                <div class="modal-body">
+                     {{#autoForm  collection="CbuSocios" id="modificarCbuSocios_" doc=this type="update"}}
+                           {{> afQuickField name='banco' style=""}}
+                         {{> afQuickField name='cbu' id="cbu" style="width:230px"}}
+       {{> afQuickField name='titular' style=""}}
+       {{> afQuickField name='tipoCuenta' style=""}}
+      {{> afQuickField name='nroCuenta' style=""}}
+      {{> afQuickField name='cuil' style=""}}
+                 
+                       <div class="modal-footer">
+         <button type="submit" disabled="{{disableButtons}}"  id="btnAcepta" style="width:100%" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> ACEPTAR</button>
+ 
+      </div>
+                     {{/autoForm}}
+                
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</template>

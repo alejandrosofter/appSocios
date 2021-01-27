@@ -1,0 +1,107 @@
+<template name="mensajes">
+    <div style="float:right"><button id="btnAgregar" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-plus"> <b>NUEVO</b> mensaje</span></button></div>
+   <h1><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Mensajes <small> a socios..</small></h1>
+
+{{> reactiveTable id="tablaMensajes" settings=settings}}
+
+</template>
+<template name="accionesMensajes">
+  <div class="acciones" style="display:none">
+{{#if paraAplicar}}
+    <button title="Aplicar" type="button" class="aplicar btn  btn-xs btn-warning" aria-label="Left Align">  <span class="glyphicon glyphicon-off" aria-hidden="true"></span> </button>
+  {{/if}}
+  {{#if enviado}}
+    <button title="Ver Mensajes" type="button" class="verMensajes btn  btn-xs btn-success" aria-label="Left Align">  <span class="glyphicon glyphicon-user" aria-hidden="true"></span> </button>
+      {{/if}}
+    <button title="Modificar" type="button" class="update btn  btn-xs btn-primary" aria-label="Left Align">  <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> </button>
+
+    <button title="Quitar" type="button" class="delete btn  btn-xs btn-danger" aria-label="Left Align">  <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button>
+      
+  </div>
+</template>
+
+<template name='templSocioAuto'>
+<span style="color:green">{{nroSocio}}</span> <b>{{apellido}}</b>, <small>{{nombre}}</small>
+</template>
+<template name='nuevoMensaje'>
+<h1><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> NUEVO <small> mensaje</small></h1>
+  {{#autoForm  collection="Mensajes" id="nuevoMensaje_" type="insert"}}
+
+  <div class='col-md-6'>
+     <fieldset>
+     {{> afQuickField name='fecha'}}
+      {{> afQuickField name='excluirSociosGrupo'}}
+       <i>Envia solo a los socios que no esten asignados a ningun GRUPO</i>
+      {{> afQuickField id="mensajeEspecifico" name='mensajeEspecifico' }}
+          <div style="display:none" id="muestraSocios"> 
+ {{> afQuickField  name='idGrupo' }}
+		</div>
+    <i>Si no se tilda nada, solo enviara a los socios activos</i>
+       {{> afQuickField  name='titulo' }}
+      {{> afQuickField  name='mensaje' }}
+      {{> afQuickField  name='detalle' }}
+      {{> afQuickField  name='estado' }}
+       {{> afQuickField  name='estadoMensaje' }}
+    </fieldset>
+    <button type="submit" disabled="{{disableButtons}}" id="btnAceptar" style="width:100%" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> ACEPTAR</button>
+ <b>%nombre </b>= Nombre del Socio <br>
+ <b>%apellido </b>= Apellido del Socio <br>
+ <b>%nroSocio </b>= Nro del Socio <br>
+ 
+  </div>
+ {{/autoForm}}
+
+</template>
+<template name="autoSocio">
+{{nombre}}
+</template>
+<template name='modificarMensaje'>
+<h1><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> MODIFICA <small> mensaje</small></h1>
+  {{#autoForm  collection="Mensajes" id="modificaMensaje_" type="update" doc=this}}
+
+  <div class='col-md-6'>
+     <fieldset>
+     {{> afQuickField name='fecha'}}
+      {{> afQuickField name='excluirSociosGrupo'}}
+      <i>Envia solo a los socios que no esten asignados a ningun GRUPO</i>
+       {{> afQuickField id="mensajeEspecifico" name='mensajeEspecifico' }}
+        <div style="display:{{muestraSocios}}" id="muestraSocios"> 
+ {{> afQuickField  name='idGrupo' }}
+  <i>Si no se tilda nada, solo enviara a los socios activos</i>
+		</div>
+      {{> afQuickField  name='titulo' }}
+      {{> afQuickField  name='mensaje' }}
+      {{> afQuickField  name='detalle' }}
+      {{> afQuickField  name='estado' }}
+      {{> afQuickField  name='estadoMensaje' }}
+    </fieldset>
+
+    <button type="submit" disabled="{{disableButtons}}" id="btnAceptar" style="width:100%" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> ACEPTAR</button>
+ 
+  </div>
+ {{/autoForm}}
+
+</template>
+<template name="htmlEmail">
+<div style="float:right"> <img  style="width:130px;float:right" src="/images/logoCai.png"/> </div>
+{{mensaje}}
+
+
+</template>
+
+<template name="estadoMensajes">
+ <div class="modal fade bs-example-modal-lg" tabindex="" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+       <div class="modal-header">
+                    <h4 class="modal-title">MENSAJES ENVIADOS...</h4>
+       </div>
+                <div class="modal-body">
+                {{> reactiveTable id="tablaMensajesEnviados" settings=settings}}
+                </div>
+                
+
+</div>
+</div>
+  </div>
+</template>

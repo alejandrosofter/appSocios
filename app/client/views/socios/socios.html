@@ -1,0 +1,55 @@
+<template name="socios">
+     {{#if esAdmin}}  <div style="float:right"> <button id="btnAgregarSocio" type="button" class="btn btn-success btn-lg"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> <b>ALTA</b> socio</button></div>  {{/if}}
+   <h1><span class="glyphicon glyphicon-user" aria-hidden="true"></span> ASOCIADOS <small> en que estado se encuentran?</small></h1>
+   
+  <div class="row">
+    {{#if esAdmin}} 
+      {{#if muestraFiltros}} 
+        <div class="col-md-2">
+         {{>filtrosSocios}} 
+        </div>
+       {{/if}}
+   {{/if}}
+    <div class="col-md-9" > 
+     
+      {{> tabular id="tablaSociosGral" table=TabularTables.Socios selector=selector class="table table-condensed"}}  </div>
+  </div>
+</template>
+<template name="accionesSocios">
+  <div class="acciones" style="display:none">
+  <button title="Ver Ficha" type="button" class="ficha btn  btn-xs btn-primary" aria-label="Left Align">  <span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span> </button>
+ 
+  </div>
+</template>
+<template name="filtrosSocios">
+<h4><span class="glyphicon glyphicon-filter" aria-hidden="true"></span> <b>FILTRA </b>socios</h4>
+<table id="actividades" class="table table-condensed">
+  <tbody>
+    {{#each actividades}}
+    <tr ><td style="cursor:pointer" class="filaActividades" id="{{_id}}">{{nombreActividad}} </td> 
+      
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+  <table id="grupos" class="table table-condensed">
+  <tbody>
+    
+    {{#each grupos}}
+    <tr ><td style="cursor:pointer;width:100%" class="filaGrupos" id="{{_id}}">{{nombre}}</td>
+     
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+    <table id="planesEmpresa" class="table table-condensed">
+  <tbody>
+    
+    {{#each planesEmpresa}}
+    <tr ><td style="cursor:pointer;width:100%" class="filaPlanesEmpresa" id="{{_id}}">{{nombrePlanEmpresa}}</td>
+      
+        </tr>
+    {{/each}}
+  </tbody>
+</table>
+</template>

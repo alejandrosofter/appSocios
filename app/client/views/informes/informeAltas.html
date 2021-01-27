@@ -1,0 +1,62 @@
+<template name="informeAltas">
+  
+   <h1><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> <b>INFORME ALTAS/BAJAS</b> <small> realizadas de socios</small></h1>
+ <div  class='col-md-2'>
+<span style="float:right" class="label label-danger">{{totalAnoBajas}} BAJAS </span>
+   <span style="float:right" class="label label-success">{{totalAnoAltas}} ALTAS</span>
+   <input class="form-control" id="anoSeleccion" type="number" value="{{anoSeleccion}}" style="width:80px;float:left" placeholder="Año"><br><br><br>
+   <ul class="list-group">
+  
+    {{#each mes in meses}}
+     {{>cadaMes mes=mes}}
+   {{/each}}
+  
+</ul>
+   
+  </div>
+   <div  class='col-md-6'>
+      <div id="printArea">
+       {{>detalleMesSeleccion mes=mesSeleccion items=itemsSeleccion}}
+     
+     
+     </div>
+     
+      <button style="width:100%" id="imprimir" class="btn btn-success">
+       <span  class="glyphicon glyphicon-print" aria-hidden="true"></span>
+       Imprimir
+     </button>
+  </div>
+     
+ 
+</template>
+<template name="cadaMes">
+<li class="list-group-item"><a style="cursor:pointer" class="mesSeleccion">{{mes}}</a> 
+  <span class="mesBajas label label-danger" style="cursor:pointer;float:right">{{totalBajas}}</span>  
+  <span class="mesAltas label label-success" style="cursor:pointer;float:right">{{totalAltas}}</span></li>
+</template>
+<template name="detalleMesSeleccion">
+<h2>DETALLE DEL MES <b>{{mes}}</b></h2>
+  <table class="table table-condensed">
+<thead><tr><th>NRO SOCIO</th><th>SOCIO</th><th>ESTADO</th><th>TIPO</th></tr></thead>
+    <tbody>
+ {{#each items}}
+{{>filaDetalleMesSeleccion}}
+ {{/each}}
+        </tbody>
+  </table>
+  <div style="float:left">
+    <h4>TOTALES <strong>{{mes}}</strong></h4>
+    <b style="color:#b73364"><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> ACTIVOS : </b>{{totalActivos}} <br>
+  <b style="color:#33b749"><span class="glyphicon glyphicon-education" aria-hidden="true"></span> PARTICIPANTES : </b>{{totalParticipantes}} <br>
+  <b style="color:#337ab7"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> AHERENTES : </b>{{totalAdherentes}} <br>
+  </div>
+  <div style="float:right">
+    <h4>TOTALES <strong>GRALES</strong></h4>
+    <b style="color:#b73364"><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> ACTIVOS : </b>{{totalActivos_TOTAL}} <br>
+  <b style="color:#33b749"><span class="glyphicon glyphicon-education" aria-hidden="true"></span> PARTICIPANTES : </b>{{totalParticipantes_TOTAL}} <br>
+  <b style="color:#337ab7"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> AHERENTES  </b>{{totalAdherentes_TOTAL}} <br>
+  </div>
+</template>
+<template name="filaDetalleMesSeleccion">
+  <tr class="{{claseFila}}"><td>{{nroSocio}}</td><td>{{socio}} </td><td>{{estado}}</td><td>{{tipo}}</td></tr>   
+</template>

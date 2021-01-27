@@ -1,0 +1,63 @@
+<template name="resumenes">
+<div class="col-md-6">
+  <h1><span class="glyphicon glyphicon-print" aria-hidden="true"></span> RESUMENES<small> como deseas el resumen?</small></h1>
+
+ <div class="af-radio-group" >
+    
+    <label class="radio-inline fix-indent">
+      <input type="radio" checked=true value="pagos" name="tipo"  required="">
+     Pagos
+    </label>
+    
+    <label class="radio-inline fix-indent">
+      <input type="radio" value="actividades" name="tipo" required="">
+     Actividades
+    </label>
+    <label class="radio-inline fix-indent">
+      <input type="radio" value="deudas" name="tipo" required="">
+     Deudas
+    </label>
+    
+  </div>
+<br>
+   <div class="row">
+        <div class="col-md-4"> HASTA <input type="date" style="width:160px" id="hasta"  required="true"  class="form-control"></div>
+        <div class="col-md-4">DESDE <input type="date" style="width:160px" id="desde"  required="true"  class="form-control"></div>
+      </div>
+  <br>
+   <button id="btnPrint" style="width:100%" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> <b>IMPRIMIR</b> Resumen</button>
+
+  </div>
+  </template>
+<template name="resumenPagosActividad">
+  <tr><td>{{nombreActividad}}</td><td></td><td></td><td></td><td></td><td></td></tr>
+</template>
+<template name="resultadoImpresion">
+  <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+       <div class="modal-header">
+                    <h4 class="modal-title"><button id="btnPrint" style="float:right" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Imprimir</button> </h4>
+                </div>
+                <div class="modal-body">
+                   <h5><span class="glyphicon glyphicon-date" aria-hidden="true"></span> <b>DESDE</b> {{desde}} <b>HASTA</b> {{hasta}}</h5>
+                  <h5><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <b>SOCIOS</b> ACTIVOS: {{sociosActivos}}</h5>
+                  <h5><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> <b>PAGOS</b> POR ACTIVIDAD</h5>
+                   <table class="table table-condensed">
+    
+                    <tr><th>Actividad</th><th>$ EFECTIVO</th><th>$ POSNET</th><th>$ CHUBUT</th><th>$ OTROS BANCOS</th><th>TOTAL</th></tr>
+                    <tbody>
+                      {{#each actividades}} 
+                        {{>resumenPagosActividad}}
+                      {{/each}}
+                    </tbody>
+                  </table>
+                  
+
+                </div>
+
+    </div>
+  </div>
+</div>
+
+</template>

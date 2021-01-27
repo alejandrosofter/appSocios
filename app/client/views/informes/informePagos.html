@@ -1,0 +1,48 @@
+<template name="informePagos">
+  
+   <h1><span class="glyphicon glyphicon-usd" aria-hidden="true"></span> <b>INFORME Pagos</b> <small> realizados a socios</small></h1>
+ <div  class='col-md-2'>
+   <span style="float:right" class="label label-primary">{{totalAno}} </span>
+   <input class="form-control" id="anoSeleccion" type="number" value="{{anoSeleccion}}" style="width:80px;float:left" placeholder="Año"><br><br><br>
+   <ul class="list-group">
+  
+    {{#each mes in meses}}
+     {{>cadaMesPagos mes=mes}}
+   {{/each}}
+  
+</ul>
+   
+  </div>
+   <div  class='col-md-8'>
+      <div id="printArea">
+       {{>detalleMesPagos mes=mesSeleccion items=itemsSeleccion}}
+     
+     
+     </div>
+     
+      <button style="width:100%" id="imprimir" class="btn btn-success">
+       <span  class="glyphicon glyphicon-print" aria-hidden="true"></span>
+       Imprimir
+     </button>
+  </div>
+     
+ 
+</template>
+<template name="cadaMesPagos">
+<li class="list-group-item"><a style="cursor:pointer" class="mesSeleccion">{{mes}}</a>  
+  <span class="mesPagos label {{claseTotalMes}}" style="cursor:pointer;float:right">{{totalMes}}</span> </li>
+</template>
+<template name="detalleMesPagos">
+<h2>DETALLE DEL MES <b>{{mes}}</b></h2>
+  <table class="table table-condensed">
+<thead><tr><th>FECHA</th><th>SOCIO</th><th>MOTIVO</th><th>$ DEBITA</th> <th>$ ACREDITA</th></tr></thead>
+    <tbody>
+ {{#each items}}
+{{>filaDetalleMesSeleccionPagos}}
+ {{/each}}
+        </tbody>
+  </table>
+</template>
+<template name="filaDetalleMesSeleccionPagos">
+  <tr><td>{{fecha}}</td><td>{{socio}}</td><td>{{motivo}}</td><td>{{importeDebita}}</td><td>{{importeAcredita}}</td></tr>   
+</template>

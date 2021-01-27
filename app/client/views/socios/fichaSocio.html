@@ -1,0 +1,164 @@
+<template name="adjuntaImagen">
+    <div id="modalAdjunta" class="modal fade bs-example-modal" tabindex="" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal" role="document">
+    <div class="modal-content">
+       <div class="modal-header">
+                    <h4 class="modal-title"><b>Elije la foto:</b> presiona sobre el boton y elige la foto de tu dispositivo... </h4>
+                </div>
+                <div class="modal-body">
+                  <form>
+                    <input class="snap btn btn-primary btn-sm" type="file" name="imageFile">
+                     
+                  </form>
+                 
+                </div>
+
+    </div>
+  </div>
+</div>
+    
+   
+</template>
+<template name="camara">
+    <div id="modalCamara" class="modal fade bs-example-modal" tabindex="" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal" role="document">
+    <div class="modal-content">
+       <div class="modal-header">
+                    <h4 class="modal-title"><b>IMPORTANTE:</b>Solo funciona en firefox, Opera<button style="float:right" class="snap btn btn-success btn-sm"><span class="glyphicon glyphicon-camera" aria-hidden="true"></span> Sacar Foto Sonrisa!</button> </h4>
+                    
+                </div>
+                <div class="modal-body">
+                  <video width="320" height="440" autoplay="true" id="webcam">  </video>
+                  <br><br><br>
+                  <div id="conteFoto" style="width:170px"><canvas id="canvasFoto"> </canvas> 
+                    <button style="float:left" id="zoomMas" class=" btn btn-warning btn-sm"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span></button>
+                    <button style="float:right;" id="zoomMenos" class=" btn btn-warning btn-sm"><span class="glyphicon glyphicon-zoom-out" aria-hidden="true"></span></button>
+                    <button style="width:100%" id="btnCargar" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> GUARDAR</button></div>
+                </div>
+
+    </div>
+  </div>
+</div>
+    
+   
+</template>
+<template name="fotoSocio">
+<button style="position: absolute;top: 0px; left: 70px;" id="btnSacaFoto" type="button" class="btn btn-success btn-xs"><span style="" class="glyphicon glyphicon-camera" aria-hidden="true"></span> </button>
+  <button style="position: absolute;top: 0px; left: 10px;" id="btnAdjuntaFoto" type="button" class="btn btn-danger btn-xs"><span style="" class="glyphicon glyphicon-paperclip" aria-hidden="true"></span> </button>
+
+     {{#if imagenCarnet}}
+        <img class="img-thumbnail"  style="width:80px" src="{{imagenCarnet}}">
+  {{else}}
+  <img class="img-thumbnail" style="width:80px" src="/images/fotoSocioInexistente.png"/>
+    {{/if}}
+
+    
+
+ 
+</template>
+<template name="detalleCuentaSocio">
+{{> reactiveTable showNavigation='auto' showNavigationRowsPerPage="true" id="tablaDetalleCuenta" settings=settings}}
+
+</template>
+<template name="accesoSocio">
+  {{#if socio}} 
+  <div id="btnAccesoSocio" style="color:{{colorEstado}};cursor:pointer;padding-top:10px; padding-left:30px;float:left">{{label}} <span style="" class="glyphicon glyphicon-user" aria-hidden="true"></span> <b style="text-transform: uppercase">{{socio.apellido}}</b>, <span style="text-transform: capitalize">{{socio.nombre}}</span> <small><span class="{{claseTipo}}">{{socio.tipoSocio}} </span></small></div>
+  {{/if}}
+</template>
+<template name="fichaSocio">
+<div class="row">
+  <div class="col-md-10">
+     <div style="float:left;padding-right:10px;padding-bottom:10px"> {{>fotoSocio}}
+    {{#if idGrupo}}<div style="width:100%">
+       <span style="width:100%" class="label label-warning">{{nombreGrupo}}</span>
+       </div> {{/if}}
+    </div>
+
+ <b> <small style="color:{{colorEstado}}">{{ultimo_fechaEstado}}: {{ultimo_detalleEstado}} </small> </b>
+     <h2 style="color:{{colorEstado}}"> <b style="text-transform: uppercase">{{apellido}}</b>, <span style="text-transform: capitalize">{{nombre}}</span> <small><span class="{{claseTipo}}">{{tipoSocio}} </span><button id="editarSocio" type="button" class="btn btn-success btn-xs"><span style="" class="glyphicon glyphicon-pencil" aria-hidden="true"></span> </button>
+      {{#if esAdmin}}  <button id="quitarSocio" type="button" class="btn btn-danger btn-xs"><span style="" class="glyphicon glyphicon-remove" aria-hidden="true"></span> </button> {{/if}}
+       
+       </small></h2> 
+ 
+    
+
+   <big style="color:green"> <big><b>Nro Socio: </b>{{nroDeSocio}}</big> </big> 
+    <b>D.N.I: </b>{{dni}}
+    <b>Domicilio: </b>{{domicilio}}
+      
+    <b>Contacto/s: </b>{{telefonoFijo}} / {{telefonoMobil}} / {{email}} <br>
+ 
+  </div>
+  <div class="col-md-6">
+   
+  <p>
+        {{> movimientosCuenta}}
+    </p>
+  </div>
+  <div class="col-md-4">
+       <b> FORMA DE PAGO PRINCIPAL:</b> {{formaDePagoPrincipal}}
+       {{#if pagaEnCuenta}}
+           {{#if tieneIdCbu}}
+            <a href="/cbuSociosAsignados/{{idCbuAsociado}}" class="label label-success">CBU {{nroCbuAsignado}}</a>
+           {{else}}
+            <a class="label label-danger">DEBE ASIGNAR un CBU!</a>
+           
+           {{/if}}
+       {{/if}}
+       <br><br>
+    <ul class="nav nav-tabs" role="tablist">
+       
+    <li role="presentation" class="active"><a href="#actividades" aria-controls="actividades" role="tab" data-toggle="tab">
+   
+    <span class="glyphicon glyphicon-headphones" aria-hidden="true"></span> 
+     <span style="" class="label label-danger">{{cantidadActividades}}</span></a>
+     </li>
+    <li role="presentation"><a href="#cambiosEstado" aria-controls="cambiosEstado" role="tab" data-toggle="tab">
+<span class="glyphicon glyphicon-heart" aria-hidden="true"></span>   
+<span style="" class="label label-danger">{{cantidadCambiosEstado}}</span>
+</a></li>
+   
+    <li role="presentation"><a href="#carnets" aria-controls="carnets" role="tab" data-toggle="tab">
+<span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> 
+<span style="" class="label label-danger">{{cantidadTarjetas}}</span>
+</a></li>
+    <li role="presentation"><a href="#planesEmpresa" aria-controls="planesEmpresa" role="tab" data-toggle="tab">
+<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> 
+<span style="" class="label label-danger">{{cantidadPlanesEmpresa}}</span>
+</a></li>
+   <li role="presentation"><a href="#documentos" aria-controls="documentos" role="tab" data-toggle="tab">
+<span class="glyphicon glyphicon-picture" aria-hidden="true"></span> 
+<span style="" class="label label-danger">{{cantidadDocumentos}}</span>
+</a></li>
+<li role="presentation"><a href="#debitos" aria-controls="debitos" role="tab" data-toggle="tab">
+<span class="glyphicon glyphicon-reload" aria-hidden="true"></span> 
+<span style="" class="label label-danger">{{cantidaDebitos}}</span>
+</a></li>
+  </ul>
+  <div class="tab-content">
+<div role="tabpanel" class="tab-pane " id="debitos">{{> debitosAutomaticos}}</div>
+  <div role="tabpanel" class="tab-pane active" id="actividades">{{> actividadesSocio}}</div>
+  <div role="tabpanel" class="tab-pane" id="cambiosEstado">{{> cambiosEstado}}</div>
+  <div role="tabpanel" class="tab-pane" id="carnets">{{> tarjetasSocio}}</div>
+   <div role="tabpanel" class="tab-pane" id="planesEmpresa">{{> planesEmpresaSocio}}</div>
+    <div role="tabpanel" class="tab-pane" id="documentos">{{> documentosSocio}}</div>
+  </div>
+  
+    
+  
+  </div>
+</div>
+  
+</template>
+
+<template name="estadoSocio">
+    {{#if esActivo}} 
+  <h4  style="float:right;cursor:pointer" id=""><span class=""> <b class="label label-success">ACTIVO</b></span> </h4> 
+ 
+  {{/if}}
+  {{#if esInactivo}} 
+ <h4  style="float:right;cursor:pointer"><span class=""><b class="label label-danger">INACTIVO</b></span> </h4> 
+ 
+  {{/if}}
+</template>
+

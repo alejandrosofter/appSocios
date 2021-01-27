@@ -1,0 +1,126 @@
+<template name='nuevoSocio'>
+<h1><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> ASOCIADO <span id="tipoSocio"></span> <small> nuevo miembro!</small></h1>
+  {{#autoForm  collection="Socios" id="formSocio_" type="insert"}}
+
+  <div class='col-md-6'>
+     <fieldset>
+      <div class="row">
+         <div class="col-md-6">{{> afQuickField id="tipoSocio" name='tipoSocio'}}
+         </div>
+         <div class="col-md-3"> {{> afQuickField id="nroSocio" name='nroSocio' style="width:90px;"}}</div>
+        </div>
+       <div class="row">
+          
+        <div class="col-md-4">{{> afQuickField  name='apellido' style="width:200px;text-transform: uppercase"}}</div>
+        <div class="col-md-4">{{> afQuickField class="capitalizaPrimera" name='nombre' style="width:200px;text-transform:capitalize;"}}</div>
+      </div>
+      
+       <div class="row">
+        <div class="col-md-3"> {{> afQuickField name='esActivo' id="esActivo"  }}</div>
+        <div class="col-md-4"> {{> afQuickField name='idGrupo' }}</div>
+      </div>
+       
+      <div class="row">
+        <div class="col-md-4"> {{> afQuickField id="fechaNacimiento" name='fechaNacimiento' style="width:180px"}} <small><span class="text-success" id="edad"></span></small></div>
+        <div class="col-md-3"> {{> afQuickField name='dni' style="width:120px"}}</div>
+        <div class="col-md-4"> {{> afQuickField name='formaDePagoPrincipal'  }}</div>
+    
+      </div>
+       <div class="row">
+        <div class="col-md-6">  {{> afQuickField name='domicilio' style="width:200px;text-transform:capitalize;"}}</div>
+        <div class="col-md-6">   {{> afQuickField name='localidad' style="width:350px;text-transform:capitalize;"}}</div>
+      </div>
+      
+       <div class="row">
+        <div class="col-md-6"> {{> afQuickField style="width:120px" name='telefonoMobil' }}</div>
+        <div class="col-md-6">    {{> afQuickField name='telefonoFijo' style="width:150px"}}</div>
+      </div>
+       <div class="row">
+        <div class="col-md-6">{{> afQuickField name='email' style="width:100%" type="email"}}</div>
+        <div class="col-md-6">   {{> afQuickField type="select-radio-inline" name='sexo' }}</div>
+      </div>
+        <div class="row">
+           <div class="col-md-6">   {{> afQuickField type="select-radio-inline" name='estadoCivil' }}</div>
+        <div class="col-md-6">{{> afQuickField name='actividad' style=""}}</div>
+         <div class="col-md-6">{{> afQuickField name='tutor' style=""}}</div>
+       
+      </div>
+  
+    </fieldset>
+    <button type="submit" disabled="{{disableButtons}}"  id="btnAcepta" style="width:100%" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> ACEPTAR</button>
+ 
+  </div>
+ {{/autoForm}}
+
+</template>
+<template name='modificarSocio'><div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+     <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h1><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> ASOCIADO <span id="tipoSocio"></span> <small> cambiando datos del socio!</small></h1>
+      </div>
+      <div class="modal-body">
+         {{#autoForm  collection="Socios" id="formSocio_" doc=this type="update"}}
+
+ <fieldset>
+  <div class="row">
+         <div class="col-md-6">{{> afQuickField id="tipoSocio" name='tipoSocio'}}
+         </div>
+         <div class="col-md-3"> {{> afQuickField id="nroSocio" name='nroSocio' style="width:90px;"}}</div>
+        </div>
+       <div class="row">
+          
+        <div class="col-md-4">{{> afQuickField  name='apellido' style="width:200px;text-transform: uppercase"}}</div>
+        <div class="col-md-4">{{> afQuickField class="capitalizaPrimera" name='nombre' style="width:200px;text-transform:capitalize;"}}</div>
+      </div>
+      
+       <div class="row">
+        <div class="col-md-3"> {{> afQuickField name='esActivo' id="esActivo"  }}</div>
+        <div class="col-md-4"> {{> afQuickField name='idGrupo' }}</div>
+      </div>
+       
+      <div class="row">
+        <div class="col-md-4"> {{> afQuickField id="fechaNacimiento" name='fechaNacimiento' style="width:180px"}} <small><span class="text-success" id="edad"></span></small></div>
+        <div class="col-md-3"> {{> afQuickField name='dni' style="width:120px"}}</div>
+        <div class="col-md-4"> {{> afQuickField name='formaDePagoPrincipal'  }}</div>
+      </div>
+       <div class="row">
+        <div class="col-md-6">  {{> afQuickField name='domicilio' style="width:300px;text-transform:capitalize;"}}</div>
+        <div class="col-md-6">   {{> afQuickField name='localidad' style="width:200px;text-transform:capitalize;"}}</div>
+      </div>
+      
+       <div class="row">
+        <div class="col-md-6"> {{> afQuickField style="width:120px" name='telefonoMobil' }}</div>
+        <div class="col-md-6">    {{> afQuickField name='telefonoFijo' style="width:150px"}}</div>
+      </div>
+       <div class="row">
+        <div class="col-md-6">{{> afQuickField name='email' style="width:100%" type="email"}}</div>
+        <div class="col-md-6">   {{> afQuickField type="select-radio-inline" name='sexo' }}</div>
+      </div>
+        <div class="row">
+           <div class="col-md-6">   {{> afQuickField type="select-radio-inline" name='estadoCivil' }}</div>
+        <div class="col-md-6">{{> afQuickField name='actividad' style=""}}</div>
+         <div class="col-md-6">{{> afQuickField name='tutor' style=""}}</div>
+       
+      </div>
+
+    </fieldset>
+        <div class="modal-footer">
+         <button type="submit" disabled="{{disableButtons}}"  id="btnAcepta" style="width:100%" class="btn btn-primary"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> ACEPTAR</button>
+ 
+      </div>
+ {{/autoForm}}
+      </div>
+      
+    </div>
+  </div>
+</div>
+  
+</template>
+<template name="tmpGrupo">
+  <span class="">{{nombre}}  </span>
+</template>
+<template name="tmpSocios">
+  <span class="">{{nombre}} <small style="color:blue">{{apellido}}</small> <small style="color:green">({{dni}})</small> </span>
+</template>

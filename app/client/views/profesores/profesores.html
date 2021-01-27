@@ -1,0 +1,125 @@
+<template name="profesores">
+ {{>moduloGral nombreModulo="Profesores" detalleModulo="Profes del club..." nombreTabla="tablaProfesores" iconoModulo="user" columnas=columnas tmplUpdate="modificarProfesor" tmplAcciones="accionesProfesores" anchoAcciones=2 tmplNuevo="nuevoProfesor" nombreColeccion="Profesores"}}
+</template>  
+<template name="accionesCierresProfes">
+ <button title="Imprimir" type="button" class="imprimir btn  btn-xs btn-success" aria-label="Left Align"> 
+  <span class="glyphicon glyphicon-print" aria-hidden="true"></span> </button>
+  </template>
+<template name="imprimirCierreProfesor">
+{{> ventana tmplVentana="tmplImpresionCierreProfe" nombreVentana="impresionCierreProfe" datos=this sizeVentana="grande" tituloVentana="" subTituloVentana="" icono="print"}}
+</template>
+
+<template name="tmplImpresionCierreProfe">
+  {{>cabezal mes=mes ano=ano dia=dia}}
+PROFESOR: <b>{{nombreProfesor}}</b><br>
+PERIODO: <b> {{fechaDesde}}</b> hasta <b>{{fechaHasta}}</b><br>
+TOTAL ACUMULADO: <b>$ {{importeTotal}}</b>
+al <b> % {{data.porcentaje}}</b> de porcentual aplicado: <br>
+TOTAL GANANCIA: <b>$ {{importeGanancia}}</b>
+<br><br>
+
+<table class="table table-condensed">
+<thead> <tr><th>SOCIO</th><th>PLAN EMPRESA</th><th>$ TOTAL</th></tr></thead>
+<tbody>
+{{#each items}}
+<tr><td>{{apellido}}, {{nombre}}</td><td>{{planEmpresa}}</td><td>$ {{importe}}</td></tr>
+{{/each}}
+</tbody>
+</table>
+</template>
+
+<template name="accionesProfesores"> 
+ 
+  <button title="Ver Socios" type="button" class="verSocios btn  btn-xs btn-success" aria-label="Left Align"> 
+  <span class="glyphicon glyphicon-user" aria-hidden="true"></span> </button>
+ <div class="btn-group">
+  <button title="Cierres" type="button" class="btn btn-default dropdown-toggle btn-xs btn-primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  {{#if tieneCierres}} <span class="label label-danger">{{cantidadCierres}}</span>{{/if}}
+<span class="glyphicon glyphicon-lock" aria-hidden="true"></span>    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu">
+    <li><a href="#" class="cierres">Listado Cierres</a></li>
+    <li><a href="#" class="nuevoCierre">Nuevo Cierre</a></li>
+  </ul>
+</div>
+ 
+</template>
+
+
+<template name='nuevoProfesor'>
+
+      {{> afQuickField name='nombres'}}
+      {{> afQuickField style="width:120px" name='idActividad' }}
+      {{> afQuickField style="width:120px" name='importeAcordado' }}
+      {{> afQuickField style="width:120px" name='porcentajeAcordado' }}
+   
+</template>
+
+<template name='modificarProfesor'>
+
+      {{> afQuickField name='nombres'}}
+      {{> afQuickField style="width:120px" name='idActividad' }}
+      {{> afQuickField style="width:120px" name='importeAcordado' }}
+      {{> afQuickField style="width:120px" name='porcentajeAcordado' }}
+
+</template>
+
+<template name="accionesSociosProfesor"> 
+  <div class="acciones" style="display:none"> 
+
+    <button title="Quitar" type="button" class="delete btn  btn-xs btn-danger" aria-label="Left Align">  <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button>
+      
+  </div>
+</template>
+
+<template name="sociosProfesor">
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+
+                <div class="modal-header">
+                 <h3><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <b>({{cantidadSocios}})</b> SOCIOS <b>{{profesor}}</b> <small> PROFE <b></b></small></h3>
+                
+                </div>
+              <div class="modal-body">
+                   <div class="form-group">
+    
+    {{>buscadorAutocomplete id="buscaSocio" nombreFuncionServer="buscadorSocios" dataTemplate="socioAuto" dataSelect="socioSeleccion" sessionVar="socioSeleccion" dataSource="buscadorSocios" placeholder="Seleccione el socio..."}}
+    
+   <button title="Agregar Socio" type="button" class="agregarSocio btn  btn-sm btn-success" aria-label="Left Align">  <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> AGREGAR <b>SOCIO</b></button>
+    <span class="help-block"></span>
+  </div>
+               
+      
+                    <div id='printable'>
+                      {{> reactiveTable id="tablaSociosProfesor" settings=settings}}
+                    </div>
+<button style="width:100%" id="imprimir" class="btn btn-success">
+       <span  class="glyphicon glyphicon-print" aria-hidden="true"></span>
+       Imprimir
+     </button>
+              </div>
+
+          </div>
+      </div>
+  </div>
+</template>
+
+<template name="cierresProfesor">
+{{>subItemsGral nombreModulo="Profesores" titulo="Cierres" subTitulo="Del profe seleccionado..." tmplAcciones="accionesCierresProfes"  parent=this nombreTabla="tablaCierreProfesores" icono="lock" columnas=columnas tieneItems="si" tmplNuevo="nuevoCierreProfesor" scope="cierres" colsItems=colsItems nombreColeccion="Profesores"}}
+                
+</template>
+
+<template name="nuevoCierre">
+    {{>nuevoSubItemsGral nombreModulo="Profesores"  titulo="Cierres" subTitulo="Del profe seleccionado..." nombreTabla="tablaCierreProfesores" icono="lock" varsBuscaItems=varsBuscaItems funcionBuscaItems="buscarItemsCierres" tmpl="tmplNuevoCierre" tieneItems="si" nombreFuncionServer="buscarItemsCierres" callbackSuma=callbackSuma callbackInit=callbackInit callbackCambiaValor=callbackCambiaValor  scope="cierres"  subColeccion="items"  parent=this colsItems=colsItems }}
+</template>
+
+<template name="tmplNuevoCierre">
+ {{> afQuickField class="formulario" id='fechaInicio' name='fechaInicio'  }}
+ {{> afQuickField class="formulario" id='fechaFin' name='fechaFin' }}
+ {{> afQuickField class="formulario" id="porcentaje" name='porcentaje' }}
+ <p class="bg-warning">Ingrese el porcentaje antes de BUSCAR ITEMS</p>
+  {{> afQuickField class="formulario" id="importe" name='importe' }}
+   
+    {{> afQuickField class="formulario"  id="importeGanancia" name='importeGanancia' }}
+</template>

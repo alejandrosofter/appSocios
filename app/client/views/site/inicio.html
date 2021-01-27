@@ -1,0 +1,23 @@
+ <template name="inicio">
+   <div class="jumbotron col-md-7">
+  <h1><small>Sistema ASOCIADOS</small> <b>{{empresa}}</b>!</h1>
+  <p>Hola {{usuario.username}}, ud tiene un perfil de <b>{{usuario.profile}}</b>. </p>
+    {{#if esAdmin}}
+    <p>
+      Desde este sistema podes tener control sobre <b>ASOCIADOS</b>, 
+    llevar un control de <b>PAGOS</b>, importar pagos <b>desde BANCOS</b>, generar <b>deudas</b>, ver <b>informes varios</b>, y hasta <b>cerrar caja diaria</b>.
+     </p>
+    {{else}}
+    Ud. tiene un usuario <b>LIMITADO</b> en el que puede realizar <b>movimientos de cuenta,</b> realizar modificaciones sobre los mismos, quitar (solamente sus movientos), 
+    verificar su caja diaria.
+    {{/if}}
+    
+     <p>
+       
+         
+     </p>
+</div>
+  <div style="float:right" class="col-md-4">
+   
+   </div>
+  </template>
